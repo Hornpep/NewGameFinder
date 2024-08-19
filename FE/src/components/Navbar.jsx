@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Search from './Search';
 
 const Navbar = () => {
   return (
@@ -39,22 +40,16 @@ const Navbar = () => {
           >
             Account
           </Link>
+
+          <Search />
+
+          <Link
+            to="/Login"
+            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+          >
+            Login
+          </Link>
         </div>
-        <div className="flex-1 mx-4">
-          <div className="relative text-gray-400">
-            <input
-              type="search"
-              placeholder="Search..."
-              className="w-full bg-gray-700 text-white rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-        <Link
-          to="/Login"
-          className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-        >
-          Login
-        </Link>
       </div>
     </nav>
   );

@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Recommendations from './pages/Recommendations';
 import Wishlist from './pages/Wishlist';
 import Account from './pages/Account';
-import Search from './pages/Search';
+import SearchResults from './pages/SearchResults';
 import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import Footer from './components/Footer';
+import Gamedetails from './pages/GameDetails';
 
 const App = () => {
   return (
@@ -37,8 +33,8 @@ const App = () => {
           element={<Account />}
         />
         <Route
-          path="/Search"
-          element={<Search />}
+          path="/SearchResults"
+          element={<SearchResults />}
         />
         <Route
           path="/Login"
@@ -47,6 +43,10 @@ const App = () => {
         <Route
           path="/Signup"
           element={<Signup />}
+        />
+        <Route
+          path="/Gamedetails"
+          element={<Gamedetails />}
         />
       </Routes>
       <Footer />
