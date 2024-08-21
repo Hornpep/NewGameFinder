@@ -1,6 +1,7 @@
 import sequelize from '../db/index.js';
 import { DataTypes } from 'sequelize';
 
+// Definiere das User-Modell mit Sequelize
 const User = sequelize.define('User', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     username: { type: DataTypes.STRING, allowNull: false, unique: true },
