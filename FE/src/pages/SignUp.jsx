@@ -2,12 +2,16 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast }  from 'react-toastify';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import backgroundImage from '../assets/signup-bg-pic.jpg';
 
 const Signup = () => {
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-background-900'>
-      <div className="w-96 h-auto bg-accent-950 rounded-lg text-white p-8 absolute top-40 left-1/2 transform -translate-x-1/2 mt-10">
+    <div 
+      className="flex justify-center items-center min-h-screen"
+      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+    >
+      <div className="w-96 h-auto bg-black/30 rounded-lg text-white p-8 absolute top-40 left-1/2 transform -translate-x-1/2 mt-10 border-2 border-white/20 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.5)]">
         <form action="">
           <h1 className="text-3xl text-center mb-8">Sign Up</h1>
 
