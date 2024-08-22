@@ -4,7 +4,7 @@ import axios from 'axios';
 // Diese CRUD Operations später mit den API calls erweitern
 
 // Create a new Game
-exports.createGame = async (req, res) => {
+export const createGame = async (req, res) => {
   try {
     const game = await Game.create(req.body);
     res.status(201).json(game);
@@ -14,7 +14,7 @@ exports.createGame = async (req, res) => {
 };
 
 // Get a single Game by ID
-exports.getGameById = async (req, res) => {
+export const getGameById = async (req, res) => {
   try {
     const game = await Game.findByPk(req.params.id);
     if (!game) {
@@ -27,7 +27,7 @@ exports.getGameById = async (req, res) => {
 };
 
 // Update a Game by ID
-exports.updateGame = async (req, res) => {
+export const updateGame = async (req, res) => {
   try {
     const game = await Game.findByPk(req.params.id);
     if (!game) {
@@ -41,7 +41,7 @@ exports.updateGame = async (req, res) => {
 };
 
 // Delete a Game by ID
-exports.deleteGame = async (req, res) => {
+export const deleteGame = async (req, res) => {
   try {
     const game = await Game.findByPk(req.params.id);
     if (!game) {
@@ -74,3 +74,4 @@ export const fetchUpcomingGames = async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch upcoming games from IGDB' });
   }
 };
+

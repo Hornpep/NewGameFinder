@@ -1,5 +1,6 @@
-import { DataTypes } from 'sequelize';
 import sequelize from '../db/index.js';
+import { DataTypes } from 'sequelize';
+
 
 
 

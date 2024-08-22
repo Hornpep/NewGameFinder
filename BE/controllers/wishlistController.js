@@ -2,7 +2,7 @@ import Wishlist from '../models/Wishlist.js';
 import Game from '../models/Game.js';
 
 // Create a new Wishlist (usually linked to a user)
-exports.createWishlist = async (req, res) => {
+export const createWishlist = async (req, res) => {
   try {
     const wishlist = await Wishlist.create({
       userId: req.body.userId, // Assuming the user ID is provided in the request body
@@ -15,7 +15,7 @@ exports.createWishlist = async (req, res) => {
 };
 
 // Get all Wishlists for a specific user
-exports.getWishlistsByUserId = async (req, res) => {
+export const getWishlistsByUserId = async (req, res) => {
   try {
     const wishlists = await Wishlist.findAll({
       where: { userId: req.params.userId },
@@ -28,7 +28,7 @@ exports.getWishlistsByUserId = async (req, res) => {
 };
 
 // Delete a Wishlist entry by ID
-exports.deleteWishlist = async (req, res) => {
+export const deleteWishlist = async (req, res) => {
   try {
     const wishlist = await Wishlist.findByPk(req.params.id);
     if (!wishlist) {

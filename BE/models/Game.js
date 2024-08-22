@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize';
 import sequelize from '../db/index.js';
+import { DataTypes } from 'sequelize';
 
 const Game = sequelize.define('Game', {
   igdb_id: {

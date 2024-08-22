@@ -1,4 +1,10 @@
 import { Sequelize } from 'sequelize';
+// import Game from '../models/Game.js';
+// import Wishlist from '../models/Wishlist.js';
+// import User from './models/User.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const sequelize = new Sequelize(process.env.PG_URI, { dialect: 'postgres' });
 
@@ -11,10 +17,6 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-// Modelle importieren
-const User = require('./models/User.js');
-const Game = require('./models/Game.js');
-const Wishlist = require('./models/Wishlist.js');
 
 // Datenbank und Tabellen synchronisieren
 sequelize.sync({ alter: true })

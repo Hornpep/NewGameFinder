@@ -1,7 +1,7 @@
 import sequelize from '../db/index.js';
-import { User } from './User.js';
-import { Game } from './Game.js';
-import { Wishlist } from './Wishlist.js';
+import User from './User.js';
+import Game from './Game.js';
+import Wishlist from './Wishlist.js';
 
 // Beziehungen zwischen Tabellen definieren
 
