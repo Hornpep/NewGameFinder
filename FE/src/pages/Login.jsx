@@ -1,67 +1,58 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast }  from 'react-toastify';
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
 const Login = () => {
-  const navigate = useNavigate();
-
-  const closeModal = () => {
-    navigate(-1); // Geht zurück zur vorherigen Seite, ohne das Modal
-  };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-      <div className="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl mb-6 text-center font-bold">Login</h2>
-        <form onSubmit>
-          <div className="mb-4">
-            <label className="block mb-2 text-sm font-semibold">Username</label>
+    <div className='flex justify-center items-center min-h-screen bg-background-900'>
+      <div className="w-96 h-auto bg-accent-950 rounded-lg text-white p-8 absolute top-40 left-1/2 transform -translate-x-1/2 mt-10">
+        <form action="">
+          <h1 className="text-3xl text-center mb-8">Login</h1>
+
+          <div className="relative w-full h-12 mb-8">
             <input
               type="text"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Username"
               required
+              className="w-full h-full bg-transparent outline-none border-2 border-white/10 rounded-full text-base text-white py-3 pl-5 pr-12 placeholder-white"
             />
+            <FaUser className='absolute right-5 top-1/2 transform -translate-y-1/2 text-lg' />
           </div>
-          <div className="mb-6">
-            <label className="block mb-2 text-sm font-semibold">Password</label>
+
+          <div className="relative w-full h-12 mb-8">
             <input
               type="password"
-              className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Password"
               required
+              className="w-full h-full bg-transparent outline-none border-2 border-white/10 rounded-full text-base text-white py-3 pl-5 pr-12 placeholder-white"
             />
+            <FaLock className='absolute right-5 top-1/2 transform -translate-y-1/2 text-lg' />
           </div>
-          <div className="flex items-center justify-between mb-4">
-            <button
-              type="submit"
-              className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded font-semibold transition duration-200"
-            >
-              Login
-            </button>
-            <div className="flex items-center">
-              <Link
-                to="/signup"
-                className="text-indigo-400 hover:text-indigo-300 mr-2 text-sm font-medium"
-              >
-                Need Account ?
-              </Link>
-              <button
-                type="button"
-                onClick={() => navigate('/signup')}
-                className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded font-semibold transition duration-200"
-              >
-                Sign Up
-              </button>
-            </div>
+
+          <div className="flex justify-between text-sm mb-4">
+            <label className="flex items-center">
+              <input type="checkbox" className="accent-white mr-2" />
+              Remember me
+            </label>
+            <a href="#" className="text-white hover:underline">Forgot password?</a>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full h-12 bg-primary-500 border-none outline-none rounded-full shadow-lg cursor-pointer text-base text-gray-800"
+          >
+            Login
+          </button>
+
+          <div className="text-sm text-center mt-5">
+            <p>Don't have an account? <Link to="/signup" className="text-white font-semibold hover:underline">Sign Up</Link></p>
           </div>
         </form>
-        <button
-          onClick={closeModal}
-          className="mt-4 text-gray-400 hover:text-gray-300 text-sm transition duration-200"
-        >
-          Schließen
-        </button>
       </div>
     </div>
   );
-};
+}
 
 export default Login;
