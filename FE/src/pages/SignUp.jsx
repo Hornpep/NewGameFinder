@@ -58,9 +58,9 @@ export default function Signup() {
             Sign Up
           </button>
 
-          {/* <div className="text-sm text-center mt-5">
+          <div className="text-sm text-center mt-5">
             <p>Already have an account? <Link to="/login" className="text-white font-semibold hover:underline">Login</Link></p>
-          </div> */}
+          </div>
         </form>
       </div>
 
