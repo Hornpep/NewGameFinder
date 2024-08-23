@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import asyncHandler from '../utils/asyncHandler.js';
 
 // Middleware zur Überprüfung des JWTs im Cookie
-const verifyToken = asyncHandler(async (req, res, next) => {
+export default verifyToken = asyncHandler(async (req, res, next) => {
     const cookies =
         req.headers.cookie?.split(';').map((cookie) => cookie.trim()) || [];
     const cookiesObj = cookies.reduce((acc, cookie) => {
@@ -20,5 +20,3 @@ const verifyToken = asyncHandler(async (req, res, next) => {
     req.userId = decoded.id;
     next();
 });
-
-export default verifyToken;
