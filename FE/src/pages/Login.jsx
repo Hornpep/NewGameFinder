@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import backgroundImage from '../assets/login-bg-pic.jpg';
+import backgroundImage from '../assets/desk-bg-pic.jpg';
 
 function Login() {
   return (
