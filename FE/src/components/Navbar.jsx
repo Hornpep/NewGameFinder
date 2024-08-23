@@ -4,12 +4,12 @@ import Search from './Search';
 import LoginModal from './Modal';
 
 const Navbar = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);     // State for LoginModal
 
+  // Open and close LoginModal 
   const openLoginModal = () => {
     setIsLoginModalOpen(true);
   };
-
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
@@ -53,6 +53,7 @@ const Navbar = () => {
 
           <Search />
 
+        {/* Add Login "button" */}
           <button 
             onClick={openLoginModal} 
             className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
