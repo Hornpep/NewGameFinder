@@ -15,7 +15,6 @@ const Navbar = () => {
   };
 
   return (
-    <>
       <nav className="flex fixed top-0 left-0 w-full z-50 text-[#1CE0AF] bg-[#141414] p-6">
         <div className="flex mx-14">
           <Link
