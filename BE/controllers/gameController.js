@@ -69,14 +69,14 @@ export const fetchUpcomingGames = async (req, res) => {
   try {
     // API-Aufruf zur IGDB, um kommende Spiele zu erhalten, über den Proxy
     const response = await axios.post(
-      'https://1vp6fbagnd.execute-api.us-west-2.amazonaws.com/production.execute-api.us-west-2.amazonaws.com/production/v4/games',
+      'https://1vp6fbagnd.execute-api.us-west-2.amazonaws.com/production.execute-api.us-west-2.amazonaws.com/production/v4/release_dates',
       `fields id, name, cover.url, first_release_date, genres.name, platforms.name, involved_companies.company.name, involved_companies.publisher, summary;
       where date > 1724345716; 
       sort date asc;
       limit 10;`,
       {
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           'Client-ID': process.env.IGDB_CLIENT_ID,
           'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
           'x-api-key': process.env.IGDB_API_KEY,
@@ -87,39 +87,39 @@ export const fetchUpcomingGames = async (req, res) => {
     const upcomingGames = response.data;
 
     // Schleife über die Ergebnisse der API und Speicherung in der Datenbank
-    for (const gameData of upcomingGames) {
-      // Überprüfe, ob das Spiel bereits in der Datenbank existiert
-      const existingGame = await Game.findOne({ where: { igdb_id: gameData.id } });
+    // for (const gameData of upcomingGames) {
+    //   // Überprüfe, ob das Spiel bereits in der Datenbank existiert
+    //   const existingGame = await Game.findOne({ where: { igdb_id: gameData.id } });
 
-      if (!existingGame) {
-        // Bestimmen von Developer und Publisher
-        let developer = '';
-        let publisher = '';
+    //   if (!existingGame) {
+    //     // Bestimmen von Developer und Publisher
+    //     let developer = '';
+    //     let publisher = '';
         
-        if (gameData.involved_companies) {
-          gameData.involved_companies.forEach(company => {
-            if (company.publisher) {
-              publisher = company.company.name;
-            } else {
-              developer = company.company.name;
-            }
-          });
-        }
+    //     if (gameData.involved_companies) {
+    //       gameData.involved_companies.forEach(company => {
+    //         if (company.publisher) {
+    //           publisher = company.company.name;
+    //         } else {
+    //           developer = company.company.name;
+    //         }
+    //       });
+    //     }
 
-        // Spiel existiert noch nicht, füge es in die Datenbank ein
-        await Game.create({
-          igdb_id: gameData.id,
-          name: gameData.name,
-          cover_url: gameData.cover?.url || 'default_cover.jpg',
-          release_date: new Date(gameData.first_release_date * 1000), // Umwandlung von Unix-Timestamp in JS-Datum
-          genres: gameData.genres?.map(genre => genre.name).join(', ') || 'Unknown',
-          platforms: gameData.platforms?.map(platform => platform.name).join(', ') || 'Unknown',
-          developer: developer || 'Unknown',
-          publisher: publisher || 'Unknown',
-          about: gameData.summary || 'No description available',
-        });
-      }
-    }
+    //     // Spiel existiert noch nicht, füge es in die Datenbank ein
+    //     await Game.create({
+    //       igdb_id: gameData.id,
+    //       name: gameData.name,
+    //       cover_url: gameData.cover?.url || 'default_cover.jpg',
+    //       release_date: new Date(gameData.first_release_date * 1000), // Umwandlung von Unix-Timestamp in JS-Datum
+    //       genres: gameData.genres?.map(genre => genre.name).join(', ') || 'Unknown',
+    //       platforms: gameData.platforms?.map(platform => platform.name).join(', ') || 'Unknown',
+    //       developer: developer || 'Unknown',
+    //       publisher: publisher || 'Unknown',
+    //       about: gameData.summary || 'No description available',
+    //     });
+    //   }
+    // }
 
     // Erfolgsnachricht zurücksenden
     res.status(200).json({ message: 'Upcoming games fetched and stored successfully' });
