@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Search from './Search';
+import LoginModal from './modal';
 
 const Navbar = () => {
   return (
@@ -44,8 +45,12 @@ const Navbar = () => {
           <Search />
 
           <Link
-            to="/Login"
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            to=""  // Leerer String, um keine Navigation auszulösen
+            onClick={(e) => {
+              e.preventDefault();  // Verhindert das Standardverhalten des Links
+              openLoginModal();    // Öffnet das Modal
+            }}
+            className="cursor-pointer text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
           >
             Login
           </Link>
