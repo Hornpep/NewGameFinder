@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
-import Login from './Login';
+import Login from '../pages/Login';
 
 export default function LoginModal({ isOpen, onClose }) {
   if (!isOpen) return null;
