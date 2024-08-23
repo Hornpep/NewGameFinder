@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast }  from 'react-toastify';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
-import backgroundImage from '../assets/controller-bg-pic.jpg';
+import backgroundImage from '../assets/desk-bg-pic.jpg';
 
 export default function Signup() {
   return (
@@ -58,9 +58,9 @@ export default function Signup() {
             Sign Up
           </button>
 
-          <div className="text-sm text-center mt-5">
+          {/* <div className="text-sm text-center mt-5">
             <p>Already have an account? <Link to="/login" className="text-white font-semibold hover:underline">Login</Link></p>
-          </div>
+          </div> */}
         </form>
       </div>
 
