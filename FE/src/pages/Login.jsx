@@ -2,7 +2,7 @@ import React from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-function Login() {
+export default function Login() {
   return (
     <div className="w-96 h-auto transparent rounded-lg text-white p-8 border-2 border-white/20 backdrop-blur shadow-[0_0_10px_rgba(0,0,0,0.2)]">
       <form action="">
@@ -50,5 +50,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

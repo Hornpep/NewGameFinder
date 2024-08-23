@@ -1,11 +1,10 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast }  from 'react-toastify';
-import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 import backgroundImage from '../assets/controller-bg-pic.jpg';
 
-const Signup = () => {
-
+export default function Signup() {
   return (
     <div 
       className="flex justify-center items-center min-h-screen"
@@ -68,5 +67,3 @@ const Signup = () => {
     </div>
   );
 }
-
-export default Signup;
