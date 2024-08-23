@@ -67,24 +67,20 @@ export const deleteGame = async (req, res) => {
 
 export const fetchUpcomingGames = async (req, res) => {
   try {
-    // API-Aufruf zur IGDB, um kommende Spiele zu erhalten, über den Proxy
     const response = await axios.post(
-      'https://1vp6fbagnd.execute-api.us-west-2.amazonaws.com/production.execute-api.us-west-2.amazonaws.com/production/v4/release_dates',
-      `fields id, name, cover.url, first_release_date, genres.name, platforms.name, involved_companies.company.name, involved_companies.publisher, summary;
-      where date > 1724345716; 
-      sort date asc;
-      limit 10;`,
+      'https://api.igdb.com/v4/games/',
+      `fields name,category,cover,first_release_date,genres,involved_companies,name,platforms,release_dates,similar_games,summary; limit 10;`,
       {
+        method: 'POST',
         headers: {
-          // 'Content-Type': 'application/json',
           'Client-ID': process.env.IGDB_CLIENT_ID,
           'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
           'x-api-key': process.env.IGDB_API_KEY,
-        }
+        },
       }
     );
-
     const upcomingGames = response.data;
+    
 
     // Schleife über die Ergebnisse der API und Speicherung in der Datenbank
     // for (const gameData of upcomingGames) {
@@ -122,7 +118,8 @@ export const fetchUpcomingGames = async (req, res) => {
     // }
 
     // Erfolgsnachricht zurücksenden
-    res.status(200).json({ message: 'Upcoming games fetched and stored successfully' });
+    // res.status(200).json({ message: 'Upcoming games fetched and stored successfully' });
+    res.json(upcomingGames);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch and store upcoming games from IGDB' });
   }
