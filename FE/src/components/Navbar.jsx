@@ -44,16 +44,9 @@ const Navbar = () => {
 
           <Search />
 
-          <Link
-            to=""  // Leerer String, um keine Navigation auszulösen
-            onClick={(e) => {
-              e.preventDefault();  // Verhindert das Standardverhalten des Links
-              openLoginModal();    // Öffnet das Modal
-            }}
-            className="cursor-pointer text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-          >
+          <button onClick={openLoginModal} className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
             Login
-          </Link>
+          </button>
         </div>
       </div>
     </nav>
