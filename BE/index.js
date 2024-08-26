@@ -5,7 +5,7 @@ import sequelize from './db/index.js'; // Importiere die Sequelize-Instanz
 import User from './models/User.js';
 import Game from './models/Game.js';
 import Wishlist from './models/Wishlist.js';
-import { createGame, getGameById, updateGame, getAllGames, deleteGame, fetchUpcomingGames } from './controllers/gameController.js';
+import { createGame, getGameById, updateGame, getAllGames, fetchAllGames, deleteGame, fetchUpcomingGames } from './controllers/gameController.js';
 import { createWishlist, getWishlistsByUserId, deleteWishlist } from './controllers/wishlistController.js';
 
 
@@ -34,6 +34,9 @@ app.get('/games', getAllGames);
 app.get('/games/:id', getGameById);
 app.put('/games/:id', updateGame);
 app.delete('/games/:id', deleteGame);
+
+app.get('/all-games', fetchAllGames);
+
 
 app.get('/upcoming-games', fetchUpcomingGames);
 

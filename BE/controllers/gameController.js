@@ -65,17 +65,76 @@ export const deleteGame = async (req, res) => {
   }
 };
 
-export const fetchUpcomingGames = async (req, res) => {
+
+export const fetchAllGames = async (req, res) => {
   try {
     const response = await axios.post(
       'https://api.igdb.com/v4/games/',
-      `fields name,category,cover,first_release_date,genres,involved_companies,name,platforms,release_dates,similar_games,summary; limit 10;`,
+      `fields name,category,cover,first_release_date,genres,involved_companies,name,platforms,summary; 
+      limit 10;`,
       {
         method: 'POST',
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
           'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
-          'x-api-key': process.env.IGDB_API_KEY,
+        },
+      }
+    );
+    const allGames = response.data;
+    
+// Schleife über die Ergebnisse der API und Speicherung in der Datenbank
+for (const gameData of allGames) {
+  // Überprüfe, ob das Spiel bereits in der Datenbank existiert
+  const existingGame = await Game.findOne({ where: { igdb_id: gameData.id } });
+
+  if (!existingGame) {
+    // Bestimmen von Developer und Publisher
+    let developer = '';
+    let publisher = '';
+    
+    if (gameData.involved_companies) {
+      gameData.involved_companies.forEach(company => {
+        if (company.publisher) {
+          publisher = company.company.name;
+        } else {
+          developer = company.company.name;
+        }
+      });
+    }
+
+    // Spiel existiert noch nicht, füge es in die Datenbank ein
+    await Game.create({
+      igdb_id: gameData.id,
+      name: gameData.name,
+      categroy: gameData.category,
+      cover_url: gameData.cover?.url || 'default_cover.jpg',
+      release_date: new Date(gameData.first_release_date * 1000), // Umwandlung von Unix-Timestamp in JS-Datum
+      genres: gameData.genres?.map(genre => genre.name).join(', ') || 'Unknown',
+      platforms: gameData.platforms?.map(platform => platform.name).join(', ') || 'Unknown',
+      developer: involved_companies || 'Unknown',
+      publisher: involved_companies || 'Unknown',
+      about: gameData.summary || 'No description available',
+    });
+  }
+}
+
+// Erfolgsnachricht zurücksenden
+res.status(200).json({ message: 'Games fetched and stored successfully' });
+} catch (error) {
+res.status(500).json({ error: 'Failed to fetch and store games from IGDB' });
+}
+};
+
+export const fetchUpcomingGames = async (req, res) => {
+  try {
+    const response = await axios.post(
+      'https://api.igdb.com/v4/release_dates/',
+      `fields *; where game.platforms = 48 & date > 1538129354; sort date asc;`,
+      {
+        method: 'POST',
+        headers: {
+          'Client-ID': process.env.IGDB_CLIENT_ID,
+          'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
         },
       }
     );
