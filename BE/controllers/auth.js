@@ -18,14 +18,10 @@ export const signup = asyncHandler(async (req, res, next) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     const isProduction = process.env.NODE_ENV === 'production';
-    const cookieOptions = {
-        httpOnly: true,
-        sameSite: isProduction ? 'None' : 'Lax',
-        secure: isProduction,
-    };
+    const cookieOptions = { httpOnly: true, sameSite: isProduction ? 'None' : 'Lax', secure: isProduction };
 
     res.cookie('token', token, cookieOptions);
-    res.status(200).json({ success: 'Welcome aboard, Player One!' });
+    res.status(201).json({ success: 'Welcome aboard, Player One!' });
 });
 
 // Anmeldung eines vorhandenen Users
@@ -44,11 +40,7 @@ export const login = asyncHandler(async (req, res, next) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     const isProduction = process.env.NODE_ENV === 'production';
-    const cookieOptions = {
-        httpOnly: true,
-        sameSite: isProduction ? 'None' : 'Lax',
-        secure: isProduction,
-    };
+    const cookieOptions = { httpOnly: true, sameSite: isProduction ? 'None' : 'Lax', secure: isProduction };
 
     res.cookie('token', token, cookieOptions);
     res.status(200).json({ success: 'Game Mode: Activated!' });
@@ -62,12 +54,8 @@ export const whoAmI = asyncHandler(async (req, res, next) => {
 // Abmeldung des Benutzers und Löschen des Cookies
 export const logout = asyncHandler(async (req, res, next) => {
     const isProduction = process.env.NODE_ENV === 'production';
-    const cookieOptions = {
-        httpOnly: true,
-        sameSite: isProduction ? 'None' : 'Lax',
-        secure: isProduction,
-    };    
-    
+    const cookieOptions = { httpOnly: true, sameSite: isProduction ? 'None' : 'Lax', secure: isProduction };
+     
     res.clearCookie('token');
     res.status(200).json({ success: 'See you in the next level!' });
 });

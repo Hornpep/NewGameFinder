@@ -10,3 +10,5 @@ userRouter.get("/:id", getUser);
 userRouter.post("/", validateJOI(userSchema), createUser);
 userRouter.put("/:id", validateJOI(userSchema), updateUser);
 userRouter.delete("/:id", deleteUser);
+
+// createUser != signup -> Create User für Admin gedacht, signup für normale User
