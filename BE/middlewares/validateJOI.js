@@ -1,4 +1,4 @@
-import ErrorResponse from "../utils/ErrorResponse";
+import ErrorResponse from "../utils/ErrorResponse.js";
 import Joi from "joi";
 
 export default validateJOI = schema => (req, res, next) => {

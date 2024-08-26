@@ -1,4 +1,4 @@
-import Joi, { preferences } from 'joi';
+import Joi from 'joi';
 
 // Schema zur Validierung von Benutzerregistrierungsdaten
 export const signupSchema = Joi.object({
@@ -39,6 +39,5 @@ export const userSchema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(8).required(),
     image: Joi.string().optional(),
-    preferences: Joi.string().optional(),
     // wishlist: Joi.array().items(Joi.number().integer()).optional(), passt das?
 });
