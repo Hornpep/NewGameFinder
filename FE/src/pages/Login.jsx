@@ -1,13 +1,15 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { toast }  from 'react-toastify';
-import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import { FaUser, FaLock } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import backgroundImage from '../assets/desk-bg-pic.jpg';
 
-const Login = () => {
-
+export default function Login({ closeModal }) {
   return (
-    <div className='flex justify-center items-center min-h-screen bg-background-900'>
-      <div className="w-96 h-auto bg-accent-950 rounded-lg text-white p-8 absolute top-40 left-1/2 transform -translate-x-1/2 mt-10">
+    <div 
+      className="flex justify-center items-center min-h-screen"
+      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+    >
+      <div className="w-96 h-auto  bg-black/30 rounded-lg text-white p-8 absolute top-40 left-1/2 transform -translate-x-1/2 mt-10 border-2 border-white/20 backdrop-blur shadow-[0_0_10px_rgba(0,0,0,0.2)]">
         <form action="">
           <h1 className="text-3xl text-center mb-8">Login</h1>
 
@@ -47,12 +49,19 @@ const Login = () => {
           </button>
 
           <div className="text-sm text-center mt-5">
-            <p>Don't have an account? <Link to="/signup" className="text-white font-semibold hover:underline">Sign Up</Link></p>
+            <p>
+              Don't have an account?{' '}
+              <Link 
+                to="/signup" 
+                className="text-white font-semibold hover:underline"
+                onClick={closeModal} // Close modal when clicking Sign Up
+              >
+                Sign Up
+              </Link>
+            </p>
           </div>
         </form>
       </div>
     </div>
   );
 }
-
-export default Login;
