@@ -1,8 +1,4 @@
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
-import User from '../models/User.js';
-
-dotenv.config();
 
 // Erstelle eine neue Sequelize-Instanz mit der Datenbankverbindung
 const sequelize = new Sequelize(process.env.PG_URI, { dialect: 'postgres' });

@@ -2,9 +2,9 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import sequelize from './db/index.js'; // Importiere die Sequelize-Instanz
-import User from './models/User.js';
-import Game from './models/Game.js';
-import Wishlist from './models/Wishlist.js';
+// import User from './models/User.js';
+// import Game from './models/Game.js';
+// import Wishlist from './models/Wishlist.js';
 import authRouter from './routes/authRouter.js';
 import { createGame, getGameById, updateGame, getAllGames, deleteGame, fetchUpcomingGames } from './controllers/gameController.js';
 import { createWishlist, getWishlistsByUserId, deleteWishlist } from './controllers/wishlistController.js';

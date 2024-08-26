@@ -30,7 +30,7 @@ export const gameSchema = Joi.object({
 export const wishlistSchema = Joi.object({
     games_id: Joi.number().integer().required(),  // ID des Spiels in der DB
     users_id: Joi.number().integer().required(),  // ID des Nutzers in der DB
-    added_at: Joi.date().default(() => new Date(), 'current date').optional(), // Optional, standardmäßig aktuelle Zeit
+    // added_at: Joi.date().default(() => new Date(), 'current date').optional(), // Optional, standardmäßig aktuelle Zeit
 });
 
 // User Schema
