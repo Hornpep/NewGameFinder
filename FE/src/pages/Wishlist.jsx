@@ -12,10 +12,12 @@ const Wishlist = () => {
         if (!response.ok) {
           throw new Error('Netzwerkantwort war nicht ok');
         }
+
         return response.json();
       })
       .then((data) => {
         setData(data); // data =  Array von Objekten
+
         setLoading(false);
       })
       .catch((error) => {
