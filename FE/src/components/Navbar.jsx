@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 import LoginModal from './Modal';
 
