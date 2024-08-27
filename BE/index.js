@@ -16,14 +16,13 @@ app.use(cors({
   origin: "http://localhost:8080",
   methods: ["GET", "POST", "PUT", "DELETE"],
 }));
+app.use('/auth', authRouter);
 
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-
-
 
 // app.post('/users', userController.createUser);
 // app.get('/users/:id', userController.getUserById);
