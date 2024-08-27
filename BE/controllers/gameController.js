@@ -8,6 +8,7 @@ export const createGame = async (req, res) => {
   try {
     const game = await Game.create(req.body);
     res.status(201).json(game);
+    console.log('Hallo');
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -17,7 +18,7 @@ export const createGame = async (req, res) => {
 export const getAllGames = async (req, res) => {
   try {
     const games = await Game.findAll();
-    res.status(200).json(games);
+    return res.status(200).json(games);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -76,8 +77,8 @@ export const fetchUpcomingGames = async (req, res) => {
       {
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
-          'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`
-        }
+          Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
+        },
       }
     );
 
@@ -86,15 +87,17 @@ export const fetchUpcomingGames = async (req, res) => {
     // Schleife über die Ergebnisse der API und Speicherung in der Datenbank
     for (const gameData of upcomingGames) {
       // Überprüfe, ob das Spiel bereits in der Datenbank existiert
-      const existingGame = await Game.findOne({ where: { igdb_id: gameData.id } });
+      const existingGame = await Game.findOne({
+        where: { igdb_id: gameData.id },
+      });
 
       if (!existingGame) {
         // Bestimmen von Developer und Publisher
         let developer = '';
         let publisher = '';
-        
+
         if (gameData.involved_companies) {
-          gameData.involved_companies.forEach(company => {
+          gameData.involved_companies.forEach((company) => {
             if (company.publisher) {
               publisher = company.company.name;
             } else {
@@ -109,8 +112,11 @@ export const fetchUpcomingGames = async (req, res) => {
           name: gameData.name,
           cover_url: gameData.cover?.url || 'default_cover.jpg',
           release_date: new Date(gameData.first_release_date * 1000), // Umwandlung von Unix-Timestamp in JS-Datum
-          genres: gameData.genres?.map(genre => genre.name).join(', ') || 'Unknown',
-          platforms: gameData.platforms?.map(platform => platform.name).join(', ') || 'Unknown',
+          genres:
+            gameData.genres?.map((genre) => genre.name).join(', ') || 'Unknown',
+          platforms:
+            gameData.platforms?.map((platform) => platform.name).join(', ') ||
+            'Unknown',
           developer: developer || 'Unknown',
           publisher: publisher || 'Unknown',
           about: gameData.summary || 'No description available',
@@ -118,10 +124,13 @@ export const fetchUpcomingGames = async (req, res) => {
       }
     }
 
-
     // Erfolgsnachricht zurücksenden
-    res.status(200).json({ message: 'Upcoming games fetched and stored successfully' });
+    res
+      .status(200)
+      .json({ message: 'Upcoming games fetched and stored successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch and store upcoming games from IGDB' });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch and store upcoming games from IGDB' });
   }
 };
