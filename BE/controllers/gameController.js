@@ -79,48 +79,8 @@ export const fetchUpcomingGames = async (req, res) => {
         },
       }
     );
-    const upcomingGames = response.data;
-
-    // Schleife über die Ergebnisse der API und Speicherung in der Datenbank
-    for (const gameData of upcomingGames) {
-      // Überprüfe, ob das Spiel bereits in der Datenbank existiert
-      const existingGame = await Game.findOne({
-        where: { igdb_id: gameData.id },
-      });
-
-      if (!existingGame) {
-        // Bestimmen von Developer und Publisher
-        let developer = '';
-        let publisher = '';
-
-        if (gameData.involved_companies) {
-          gameData.involved_companies.forEach((company) => {
-            if (company.publisher) {
-              publisher = company.company.name;
-            } else {
-              developer = company.company.name;
-            }
-          });
-        }
-
-        // Spiel existiert noch nicht, füge es in die Datenbank ein
-        await Game.create({
-          igdb_id: gameData.id,
-          name: gameData.name,
-          cover_url: gameData.cover?.url || 'default_cover.jpg',
-          release_date: new Date(gameData.first_release_date * 1000), // Umwandlung von Unix-Timestamp in JS-Datum
-          genres:
-            gameData.genres?.map((genre) => genre.name).join(', ') || 'Unknown',
-          platforms:
-            gameData.platforms?.map((platform) => platform.name).join(', ') ||
-            'Unknown',
-          developer: developer || 'Unknown',
-          publisher: publisher || 'Unknown',
-          about: gameData.summary || 'No description available',
-        });
-      }
-    }
-
+    
+ 
     // Erfolgsnachricht zurücksenden
     res
       .status(200)
