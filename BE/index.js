@@ -12,8 +12,10 @@ import { createWishlist, getWishlistsByUserId, deleteWishlist } from './controll
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-app.use('/auth', authRouter);
+app.use(cors({  
+  origin: "http://localhost:8080",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 
 const PORT = process.env.PORT || 8080;
 
@@ -21,17 +23,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-// Synchronisiere die Modelle mit der Datenbank und starte den Server
-sequelize.sync({ alter: true })  // Dies aktualisiert die Datenbankstruktur basierend auf den Modellen
-  .then(() => {
-    console.log('All models were synchronized successfully.');
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch(error => {
-    console.error('Unable to synchronize the models:', error);
-  });
+
 
 // app.post('/users', userController.createUser);
 // app.get('/users/:id', userController.getUserById);
@@ -49,3 +41,15 @@ app.get('/upcoming-games', fetchUpcomingGames);
 app.post('/wishlists', createWishlist);
 app.get('/users/:userId/wishlists', getWishlistsByUserId);
 app.delete('/wishlists/:id', deleteWishlist);
+
+// Synchronisiere die Modelle mit der Datenbank und starte den Server
+sequelize.sync({ alter: true })  // Dies aktualisiert die Datenbankstruktur basierend auf den Modellen
+  .then(() => {
+    console.log('All models were synchronized successfully.');
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch(error => {
+    console.error('Unable to synchronize the models:', error);
+  });
