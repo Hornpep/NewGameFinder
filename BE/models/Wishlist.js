@@ -4,6 +4,7 @@ import { DataTypes } from 'sequelize';
 const Wishlist = sequelize.define('Wishlist', {
   id: {
     type: DataTypes.INTEGER,
+    primaryKey: true,
     allowNull: false
   },
   igdb_id: {
