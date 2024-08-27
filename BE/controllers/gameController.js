@@ -9,7 +9,7 @@ dotenv.config();
 export const getAllGames = async (req, res) => {
   try {
     const games = await Game.findAll();
-    res.status(200).json(games);
+    return res.status(200).json(games);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
