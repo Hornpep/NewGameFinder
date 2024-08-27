@@ -13,7 +13,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 
     const token = cookiesObj.token;
     if (!token)
-        return res.status(401).json({error: 'Unauthorized: Please sign in'});
+        return res.status(401).json({error: 'Unauthorized: Please login first'});
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log(decoded);
