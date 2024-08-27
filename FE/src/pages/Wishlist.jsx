@@ -7,7 +7,7 @@ const Wishlist = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/games') // HIER an BE anbinden
+    fetch('http://localhost:8080/games') // HIER an BE anbinden
       .then((response) => {
         if (!response.ok) {
           throw new Error('Netzwerkantwort war nicht ok');
@@ -37,7 +37,7 @@ const Wishlist = () => {
       {data.map((item, index) => (
         <div
           key={index}
-          className="item relative border-8 border-[#1CE0AF]  hover:border-4 hover:border-[#1DD0E0] rounded-lg  w-1/10 min-w-[200px] h-80 bg-[#141414] "
+          className="item relative border-12 border-black  hover:border-4 hover:border-[#1DD0E0] rounded-lg  w-1/10 min-w-[200px] h-80 bg-[#141414] "
         >
           <div
             className="absolute inset-0 bg-cover bg-center rounded-lg"
