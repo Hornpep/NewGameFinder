@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 import LoginModal from './Modal';
 
 const Navbar = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);     // State for LoginModal
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // State for LoginModal
 
-  // Open and close LoginModal 
+  const location = useLocation();
+  const [activeLink, setActiveLink] = useState(location.pathname);
+
+  const handleLinkClick = (path) => {
+    setActiveLink(path);
+  };
+
+  // Open and close LoginModal
   const openLoginModal = () => {
     setIsLoginModalOpen(true);
   };
@@ -21,6 +28,7 @@ const Navbar = () => {
           <Link
             to="/"
             className="text-3xl font-heading font-extrabold text-[#1CE0AF]"
+            onClick={() => handleLinkClick('/')}
           >
             LOGO
           </Link>
@@ -28,35 +36,62 @@ const Navbar = () => {
         <div className="flex-1 hidden font-heading font-extrabold md:flex justify-center space-x-4">
           <Link
             to="/"
-            className="text-[#1CE0AF] text-2xl border border-[#1CE0AF] shadow-lg font-heading hover:text-[#1DD0E0] hover:border hover:border-[#1DD0E0] focus:shadow-outline px-3 py-2 rounded-md"
+            className={`text-2xl border shadow-lg font-heading px-3 py-2 rounded-md ${
+              activeLink === '/'
+                ? 'border-[#1CE0AF] text-[#1CE0AF]'
+                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+            }`}
+            onClick={() => handleLinkClick('/')}
           >
             Home
           </Link>
           <Link
             to="/Recommendations"
-            className="text-[#1CE0AF] text-2xl border border-[#1CE0AF] hover:text-[#1DD0E0] hover:border hover:border-[#1DD0E0] px-3 py-2 rounded-md"
+            className={`text-2xl border px-3 py-2 rounded-md ${
+              activeLink === '/Recommendations'
+                ? 'border-[#1CE0AF] text-[#1CE0AF]'
+                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+            }`}
+            onClick={() => handleLinkClick('/Recommendations')}
           >
             Recommendations
           </Link>
           <Link
             to="/Wishlist"
-            className="text-[#1CE0AF] text-2xl border border-[#1CE0AF] hover:text-[#1DD0E0] hover:border hover:border-[#1DD0E0] px-3 py-2 rounded-md"
+            className={`text-2xl border px-3 py-2 rounded-md ${
+              activeLink === '/Wishlist'
+                ? 'border-[#1CE0AF] text-[#1CE0AF]'
+                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+            }`}
+            onClick={() => handleLinkClick('/Wishlist')}
           >
             Wishlist
           </Link>
           <Link
             to="/Account"
-            className="text-[#1CE0AF] text-2xl border border-[#1CE0AF] hover:text-[#1DD0E0] hover:border hover:border-[#1DD0E0] px-3 py-2 rounded-md"
+            className={`text-2xl border px-3 py-2 rounded-md ${
+              activeLink === '/Account'
+                ? 'border-[#1CE0AF] text-[#1CE0AF]'
+                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+            }`}
+            onClick={() => handleLinkClick('/Account')}
           >
             Account
           </Link>
 
           <Search />
 
-        {/* Add Login "button" */}
-          <button 
-            onClick={openLoginModal} 
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+          {/* Add Login "button" */}
+          <button
+            onClick={() => {
+              handleLinkClick('/Login');
+              openLoginModal();
+            }}
+            className={`text-2xl border px-3 py-2 rounded-md ${
+              activeLink === '/Login'
+                ? 'border-[#1CE0AF] text-[#1CE0AF]'
+                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+            }`}
           >
             Login
           </button>
@@ -64,7 +99,10 @@ const Navbar = () => {
       </nav>
 
       {/* Render LoginModal */}
-      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={closeLoginModal}
+      />
     </>
   );
 };
