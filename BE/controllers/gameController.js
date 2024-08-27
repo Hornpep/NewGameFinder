@@ -1,7 +1,8 @@
 import Game from '../models/Game.js';
 import axios from 'axios';
+import dotenv from 'dotenv';
 
-// Diese CRUD Operations später mit den API calls erweitern
+dotenv.config();
 
 // Create a new Game
 export const createGame = async (req, res) => {
@@ -67,21 +68,17 @@ export const deleteGame = async (req, res) => {
 
 export const fetchUpcomingGames = async (req, res) => {
   try {
-    // API-Aufruf zur IGDB, um kommende Spiele zu erhalten
     const response = await axios.post(
-      'https://api.igdb.com/v4/games',
-      `fields id, name, cover.url, first_release_date, genres.name, platforms.name, involved_companies.company.name, involved_companies.publisher, summary;
-      where date > 1724345716; 
-      sort date asc;
-      limit 10;`,
+      'https://api.igdb.com/v4/games/',
+      `fields name,category,cover,first_release_date,genres,involved_companies,name,platforms,release_dates,similar_games,summary; limit 10;`,
       {
+        method: 'POST',
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
           Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
         },
       }
     );
-
     const upcomingGames = response.data;
 
     // Schleife über die Ergebnisse der API und Speicherung in der Datenbank
