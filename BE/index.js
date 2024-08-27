@@ -5,8 +5,8 @@ import sequelize from './db/index.js'; // Importiere die Sequelize-Instanz
 import User from './models/User.js';
 import Game from './models/Game.js';
 import Wishlist from './models/Wishlist.js';
-import { createGame, getGameById, updateGame, getAllGames, fetchAllGames, deleteGame, fetchUpcomingGames } from './controllers/gameController.js';
-import { createWishlist, getWishlistsByUserId, deleteWishlist } from './controllers/wishlistController.js';
+import { getGameById, getAllGames, fetchAllGames, fetchUpcomingGames } from './controllers/gameController.js';
+import { createWishlist, getWishlistsByUserId, deleteWishlist, updateGame, deleteGame } from './controllers/wishlistController.js';
 
 
 const app = express();
@@ -29,7 +29,6 @@ app.get('/', (req, res) => {
 // app.put('/users/:id', userController.updateUser);
 // app.delete('/users/:id', userController.deleteUser);
 
-app.post('/games', createGame);
 app.get('/games', getAllGames);
 app.get('/games/:id', getGameById);
 app.put('/games/:id', updateGame);
