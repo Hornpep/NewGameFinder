@@ -24,3 +24,57 @@ export const signup = async(formData) => {
     const data = await res.json();
     return data;
 }
+
+export const login = async(formData) => {
+    const res = await fetch(baseUrl + '/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData),
+    });
+
+    if (!res.ok) {
+        const errorData = await res.json();
+        if (!errorData.error) {
+            throw new Error('Something went wrong with your login!');
+        }
+        throw new Error(errorData.error);
+    }
+    const data = await res.json();
+    return data;
+};
+
+export const whoAmI = async () => {
+    const res = await fetch(baseUrl + "/whoAmI", {
+      credentials: "include",
+    });
+  
+    if (!res.ok) {
+      const errorData = await res.json();
+      if (!errorData.error) {
+        throw new Error('Something went wrong!');
+      }
+      throw new Error(errorData.error);
+    }
+    const data = await res.json();
+    return data;
+  };
+  
+  export const logout = async () => {
+    const res = await fetch(baseUrl + "/logout", {
+      method: "DELETE",
+      credentials: "include",
+    });
+  
+    if (!res.ok) {
+      const errorData = await res.json();
+      if (!errorData.error) {
+        throw new Error('Something went wrong with your logout!');
+      }
+      throw new Error(errorData.error);
+    }
+    const data = await res.json();
+    return data;
+  };

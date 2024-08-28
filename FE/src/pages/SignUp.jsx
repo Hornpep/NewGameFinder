@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { toast }  from 'react-toastify';
-import { signup } from '../data/auth';
+import { signup } from '../data/auth.js';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 import backgroundImage from '../assets/desk-bg-pic.jpg';
 
@@ -13,7 +13,6 @@ export default function Signup() {
     confirmPassword: '',
   });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = e => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
@@ -24,16 +23,14 @@ export default function Signup() {
         throw new Error('All fields are required');
       if (password !== confirmPassword) throw new Error('Passwords do not match');
       setLoading(true);
-      console.log(firstName, lastName, email, password, confirmPassword);
+      const res = await signup({ username, email, password, confirmPassword });
+      toast.success(res.success)
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
-
-
-
 
   return (
     <div 

@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login } from '../data/auth';
 import backgroundImage from '../assets/desk-bg-pic.jpg';
 
 export default function Login({ closeModal }) {
+  const [{ username, password }, setForm] = useState({
+    username: '',
+    password: ''
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = e => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      if (!username || !password) throw new Error('All fields are required');
+      setLoading(true);
+      const response = await login({ username, password });
+      // Implement success logic here (e.g., redirect, close modal)
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div 
       className="flex justify-center items-center min-h-screen"
