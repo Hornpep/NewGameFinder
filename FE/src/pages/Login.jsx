@@ -6,8 +6,8 @@ import { login } from '../data/auth';
 import backgroundImage from '../assets/desk-bg-pic.jpg';
 
 export default function Login({ closeModal }) {
-  const [{ username, password }, setForm] = useState({
-    username: '',
+  const [{ email, password }, setForm] = useState({
+    email: '',
     password: ''
   });
 
@@ -18,9 +18,9 @@ export default function Login({ closeModal }) {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      if (!username || !password) throw new Error('All fields are required');
+      if (!email || !password) throw new Error('All fields are required');
       setLoading(true);
-      const response = await login({ username, password });
+      const response = await login({ email, password });
       // Implement success logic here (e.g., redirect, close modal)
     } catch (error) {
       toast.error(error.message);
