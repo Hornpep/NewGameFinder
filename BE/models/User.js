@@ -1,4 +1,4 @@
-import sequelize from '../db/index.js';
+import sequelize from '../db/index.js'; 
 import { DataTypes } from 'sequelize';
 
 const User = sequelize.define('User', {
@@ -10,6 +10,6 @@ const User = sequelize.define('User', {
     image: { type: DataTypes.STRING, defaultValue: 'no-photo.jpg' },
     preferences: { type: DataTypes.STRING },
     wishlist: { type: DataTypes.STRING },
-}); 
+});
 
 export default User;
