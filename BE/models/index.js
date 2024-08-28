@@ -10,6 +10,6 @@ User.hasOne(Wishlist);
 Wishlist.belongsTo(User);
 
 // Ein Game kann in vielen Wishlists enthalten sein
-Game.hasMany(Wishlist);
-Wishlist.belongsTo(Game);
+// Game.hasMany(Wishlist);
+// Wishlist.belongsTo(Game);
 
