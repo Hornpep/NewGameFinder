@@ -44,7 +44,7 @@ export const fetchAllGames = async (req, res) => {
     );
     const allGames = response.data;
 
-// Erfolgsnachricht zurücksenden
+    res.json(allGames);
 res.status(200).json({ message: 'Games fetched successfully' });
 } catch (error) {
 res.status(500).json({ error: 'Failed to fetch from IGDB' });
