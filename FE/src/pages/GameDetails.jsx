@@ -38,7 +38,7 @@ const Gamedetails = () => {
                     herauszufordern. Getrieben von Rache und dem Willen, die
                     Menschheit vor der ewigen Verdammnis zu bewahren, stürzt er
                     sich in die Tiefen der Hölle, wo die wahre Schlacht erst
-                    beginnt. longer longer
+                    beginnt.
                   </p>
                 </div>
                 <div className="flex flex-row p-2   justify-center">
