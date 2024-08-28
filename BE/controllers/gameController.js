@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
 // Get all Games
 export const getAllGames = async (req, res) => {
   try {
@@ -38,17 +37,17 @@ export const fetchAllGames = async (req, res) => {
         method: 'POST',
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
-          'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
         },
       }
     );
     const allGames = response.data;
 
     res.json(allGames);
-res.status(200).json({ message: 'Games fetched successfully' });
-} catch (error) {
-res.status(500).json({ error: 'Failed to fetch from IGDB' });
-}
+    res.status(200).json({ message: 'Games fetched successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch from IGDB' });
+  }
 };
 
 export const fetchUpcomingGames = async (req, res) => {
@@ -60,15 +59,43 @@ export const fetchUpcomingGames = async (req, res) => {
         method: 'POST',
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
-          'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
         },
       }
     );
     const upcomingGames = response.data;
-    
 
     res.json(upcomingGames);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch upcoming games from IGDB' });
   }
 };
+
+export const fetchSearch = async (req, res) => {
+  try {
+    const searchQuery = req.query.search || 'Call of Duty';
+
+    const response = await axios.post(
+      'https://api.igdb.com/v4/games',
+      `fields * ; search "${searchQuery}"; limit 10; `,
+
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Client-ID': process.env.IGDB_CLIENT_ID,
+          Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
+        },
+      }
+    );
+    const searchResults = response.data;
+
+    res.json(searchResults);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch Search from IGDB' });
+  }
+};
+
+/* const response = await axios.post(
+  'https://api.igdb.com/v4/covers',
+  `fields * ; where game = 115032; `, // Füge den Suchparameter hier hinzu */
