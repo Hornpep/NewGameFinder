@@ -5,6 +5,7 @@ import sequelize from './db/index.js'; // Importiere die Sequelize-Instanz
 import User from './models/User.js';
 import Game from './models/Game.js';
 import Wishlist from './models/Wishlist.js';
+import authRouter from './routes/authRouter.js';
 import { getGameById, getAllGames, fetchAllGames, fetchUpcomingGames } from './controllers/gameController.js';
 import { createWishlist, getWishlistsByUserId, deleteWishlist, updateGame, deleteGame } from './controllers/wishlistController.js';
 
@@ -12,19 +13,17 @@ import { createWishlist, getWishlistsByUserId, deleteWishlist, updateGame, delet
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-/* {  
-  origin: "http://localhost:8080",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-} */
+// app.use(cors({  
+//   origin: "http://localhost:8080",
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+// }));
+app.use('/auth', authRouter);
 
 const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-
-
 
 // app.post('/users', userController.createUser);
 // app.get('/users/:id', userController.getUserById);
