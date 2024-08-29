@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 import LoginModal from './Modal';
+import { useAuth } from '../context';
 
 const Navbar = () => {
+  const { isAuthenticated, signout, user } = useAuth();
+
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // State for LoginModal
 
   const location = useLocation();
@@ -23,7 +26,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex flex-row fixed top-0 left-0 w-full z-50 text-[#1CE0AF] bg-[#141414] p-6">
+      <nav className="flex flex-row fixed top-0 left-0 w-full z-50 text-[#1CE0AF] bg-[#141414] p-6">        
         <div className="flex mx-14">
           <Link
             to="/"
@@ -81,20 +84,36 @@ const Navbar = () => {
 
           <Search />
 
-          {/* Add Login "button" */}
-          <button
-            onClick={() => {
-              handleLinkClick('/Login');
-              openLoginModal();
-            }}
-            className={`text-2xl border px-3 py-2 rounded-md ${
-              activeLink === '/Login'
-                ? 'border-[#1CE0AF] text-[#1CE0AF]'
-                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
-            }`}
-          >
-            Login
-          </button>
+          {isAuthenticated ? (
+            <button
+              onClick={() => {
+                handleLinkClick('/Logout');
+                signout();
+              }}
+              className={`text-2xl border px-3 py-2 rounded-md ${
+                activeLink === '/Logout'
+                  ? 'border-[#1CE0AF] text-[#1CE0AF]'
+                  : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+              }`}
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                handleLinkClick('/Login');
+                openLoginModal();
+              }}
+              className={`text-2xl border px-3 py-2 rounded-md ${
+                activeLink === '/Login'
+                  ? 'border-[#1CE0AF] text-[#1CE0AF]'
+                  : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+              }`}
+            >
+              Login
+            </button>
+          )}
+
         </div>
       </nav>
 
