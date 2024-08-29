@@ -4,6 +4,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
+export const whoAmI = asyncHandler(async (req, res, next) => {
+    const user = await User.findByPk(req.userId, { attributes: { exclude: ['password'] } });
+    res.status(200).json({ success: user });
+});
+
 // Registrierung eines neuen Users
 export const signup = asyncHandler(async (req, res, next) => {
     const { username, email, password } = req.body;
@@ -45,11 +50,6 @@ export const login = asyncHandler(async (req, res, next) => {
 
     res.cookie('token', token, cookieOptions);
     res.status(200).json({ success: 'Game Mode: Activated!' });
-});
-
-export const whoAmI = asyncHandler(async (req, res, next) => {
-    const user = await User.findByPk(req.userId, { attributes: { exclude: ['password'] } });
-    res.status(200).json({ success: user });
 });
 
 // Abmeldung des Benutzers und Löschen des Cookies
