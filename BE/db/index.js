@@ -4,12 +4,16 @@ import { Sequelize } from 'sequelize';
 const sequelize = new Sequelize(process.env.PG_URI, { dialect: 'postgres' });
 
 // Verbindung zur Datenbank prüfen
-sequelize.authenticate()
-  .then(() => {
+const authenticateDatabase = async () => {
+  try {
+    await sequelize.authenticate();
     console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
+  } catch (err) {
     console.error('Unable to connect to the database:', err);
-  });
+    process.exit(1); // Beende den Prozess bei Verbindungsfehler
+  }
+};
+
+authenticateDatabase();
 
 export default sequelize;
