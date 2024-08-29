@@ -15,13 +15,21 @@ export default function Login({ closeModal }) {
 
   const handleChange = e => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!email || !password) throw new Error('All fields are required');
+      if (!email || !password) throw new Error('Alle Felder sind erforderlich');
       setLoading(true);
       const response = await login({ email, password });
-      toast.success(res.success);
+  
+      if (response.success) {
+        toast.success('Login erfolgreich');
+        setForm({ email: '', password: '' });
+        console.log('Formular zurückgesetzt');
+        closeModal();
+      } else {
+        toast.error('Login fehlgeschlagen');
+      }
     } catch (error) {
       toast.error(error.message);
       console.error(error);
@@ -44,6 +52,7 @@ export default function Login({ closeModal }) {
               type="email"
               placeholder="E-Mail"
               name='email'
+              value={email}
               onChange={handleChange}
               required
               className="w-full h-full bg-transparent outline-none border-2 border-white/10 rounded-full text-base text-white py-3 pl-5 pr-12 placeholder-white"
@@ -56,6 +65,7 @@ export default function Login({ closeModal }) {
               type="password"
               placeholder="Password"
               name='password'
+              value={password}
               onChange={handleChange}
               required
               className="w-full h-full bg-transparent outline-none border-2 border-white/10 rounded-full text-base text-white py-3 pl-5 pr-12 placeholder-white"
@@ -78,13 +88,10 @@ export default function Login({ closeModal }) {
           <div className="text-sm text-center mt-5">
             <p>
               Don't have an account?{' '}
-              <Link 
-                to="/signup" 
-                className="text-white font-semibold hover:underline"
-                onClick={closeModal} // Close modal when clicking Sign Up
-              >
+              {/* Close modal when clicking Sign Up */}
+              <Link to="/signup" className="text-white font-semibold hover:underline" onClick={closeModal}> 
                 Sign Up
-              </Link>
+              </Link> 
             </p>
           </div>
         </form>
