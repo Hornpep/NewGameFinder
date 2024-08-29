@@ -96,7 +96,7 @@ const Gamedetails = () => {
                   <div>
                     <div className="flex flex-row p-2  justify-center">
                       <p className="text-white border w-full text-xl rounded-md border-[#1CE0AF]">
-                        {results[0].storyline}
+                        {results[0].summary}
                       </p>
                     </div>
                     <div className="flex flex-row p-2   justify-center">
