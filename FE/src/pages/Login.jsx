@@ -25,14 +25,13 @@ export default function Login({ closeModal }) {
       if (!email || !password) throw new Error('Alle Felder sind erforderlich');
       setLoading(true);
       const response = await login({ email, password });
-      setIsAuthenticated(true);
-      setCheckSession(true);
-  
+      
       if (response.success) {
+        setIsAuthenticated(true);
+        setCheckSession(true);
         toast.success('Login erfolgreich');
         setForm({ email: '', password: '' });
-        console.log('Formular zurückgesetzt');
-        closeModal();
+        if (closeModal) closeModal(); // Close the modal on success
       } else {
         toast.error('Login fehlgeschlagen');
       }
