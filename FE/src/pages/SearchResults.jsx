@@ -40,13 +40,13 @@ const SearchResults = () => {
       {results.map((result, index) => (
         <div
           key={index}
-          className="item relative border-12 border-black hover:border-4 hover:border-[#1DD0E0] rounded-lg w-1/10 min-w-[200px] h-80 bg-[#141414] "
+          className="item relative border  border-gray-700 hover:border-2 hover:border-[#1DD0E0] rounded-lg w-1/10 min-w-[200px] h-80 bg-[#141414] "
           onClick={() =>
             (window.location.href = `/GameDetails?id=${result.id}`)
           } // Neue Seite mit Übergabe der ID öffnen
         >
           <div
-            className="absolute inset-0 bg-contain bg-center bg-no-repeat rounded-lg"
+            className="absolute inset-0 bg-contain bg-center bg-no-repeat rounded-lg "
             style={{
               backgroundImage: `url(${
                 result.cover_url ||
