@@ -40,9 +40,12 @@ const Wishlist = () => {
         <div
           key={index}
           className="item relative border-12 border-black  hover:border-4 hover:border-[#1DD0E0] rounded-lg  w-1/10 min-w-[200px] h-80 bg-[#141414] "
+          onClick={() => (window.location.href = `/GameDetails?id=${item.id}`)}
         >
+          {/* Neue Seite mit Übergabe der ID öffnen - Achtung !! anpassen auf GameID */}
+
           <div
-            className="absolute inset-0 bg-cover bg-center rounded-lg"
+            className="absolute inset-0 bg-contain bg-center bg-no-repeat rounded-lg"
             style={{ backgroundImage: `url(${item.cover_url})` }}
           ></div>
           <div className="absolute inset-0 bg-[#141414] bg-opacity-50 rounded-lg"></div>
