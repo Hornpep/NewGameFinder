@@ -96,6 +96,67 @@ export const fetchSearch = async (req, res) => {
   }
 };
 
+export const fetchGamesById = async (req, res) => {
+  try {
+    // console.log(req.query.id);
+    const searchQuery = req.query.id || 'Call of Duty';
+
+    //console.log('SearchQuery:', searchQuery);
+
+    const response = await axios.post(
+      'https://api.igdb.com/v4/games',
+      `fields * ; where id =  ${searchQuery}; `,
+
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Client-ID': process.env.IGDB_CLIENT_ID,
+          Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
+        },
+      }
+    );
+    const searchResults = response.data;
+
+    //console.log(searchResults);
+
+    res.json(searchResults);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch Search from IGDB' });
+  }
+};
+
+export const fetchCoverById = async (req, res) => {
+  try {
+    //console.log(req.query.id);
+
+    const searchQuery = req.query.id;
+
+    //console.log('SearchQuery:', searchQuery);
+
+    const response = await axios.post(
+      'https://api.igdb.com/v4/covers',
+      `fields * ; where game =  ${searchQuery}; `,
+
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Client-ID': process.env.IGDB_CLIENT_ID,
+          Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
+        },
+      }
+    );
+    const searchResults = response.data;
+
+    //console.log('SearchResults', searchResults);
+
+    res.json(searchResults);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch Search from IGDB' });
+  }
+};
+
 /* const response = await axios.post(
   'https://api.igdb.com/v4/covers',
   `fields * ; where game = 115032; `, // Füge den Suchparameter hier hinzu */

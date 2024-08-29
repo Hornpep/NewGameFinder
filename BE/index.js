@@ -12,6 +12,8 @@ import {
   fetchAllGames,
   fetchSearch,
   fetchUpcomingGames,
+  fetchGamesById,
+  fetchCoverById,
 } from './controllers/gameController.js';
 import {
   createWishlist,
@@ -52,6 +54,8 @@ app.delete('/games/:id', deleteGame);
 app.get('/all-games', fetchAllGames);
 
 app.get('/search', fetchSearch);
+app.get('/searchGameByID', fetchGamesById); // Abruf Games für DetailPage
+app.get('/searchCoverByID', fetchCoverById); // Abruf Cover für DetailPage
 
 app.get('/upcoming-games', fetchUpcomingGames);
 
