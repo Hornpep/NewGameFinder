@@ -1,14 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Gamedetails = () => {
+  const [results, setResults] = useState([]);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search).get('id'); // Extrahiert die Suchanfrage
+
+  //console.log(query);
+
+  useEffect(() => {
+    if (query) {
+      fetchResults(query); // Ruft die Ergebnisse für die aktuelle Suchanfrage ab
+    }
+  }, [query]);
+
+  const fetchResults = async (searchQuery) => {
+    try {
+      //console.log('test');
+      // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
+      const response = await axios.get(
+        `http://localhost:8080/search?search=${searchQuery}`
+      );
+      //const results = response.data;
+      console.log(results);
+      // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
+      setResults(results);
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Suchergebnisse:', error);
+      // Optional: Fehlerbehandlung anzeigen
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-[#141414] justify-center ">
       <div className="flex h-full  bg-[#141414]  p-28 w-1/2 justify-center">
         <div className="flex border p-2 border-[#1DD0E0] rounded-md justify-center text-center">
           <div className="flex flex-col">
             <h2 className="underline text-center py-2 border rounded-md text-white font-extrabold text-3xl">
-              Gamename
-            </h2>{' '}
+              {results.name || 'GameName'}
+            </h2>
             <div className="flex flex-col  py-2">
               <img
                 className=" rounded-md  border-black  border-2"
