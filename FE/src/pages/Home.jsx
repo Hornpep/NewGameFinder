@@ -7,24 +7,49 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchGames = async () => {
+    const fetchGamesWithCovers = async () => {
       try {
         // API-Anfrage, um die kommenden Spiele zu holen
-        const response = await axios.get('http://localhost:8080/all-games'); 
-        // setGames(response.data); 
-        // setLoading(false); 
+        const response = await axios.get('http://localhost:8080/all-games');  
         const results = response.data;
-        setGames(results);
+
+        const gameIds = results.map(game => game.id);
+
+        // API-Anfrage, um die Cover zu holen
+        const coverResponse = await axios.post(
+          'https://api.igdb.com/v4/covers',
+          `fields alpha_channel,animated,checksum,game,game_localization,height,image_id,url,width; where game = (${gameIds.join(',')});`,
+          {
+            headers: {
+              'Accept': 'application/json',
+              'Client-ID': process.env.REACT_APP_IGDB_CLIENT_ID,  
+              'Authorization': `Bearer ${process.env.REACT_APP_IGDB_ACCESS_TOKEN}`, 
+            }
+          }
+        );
+
+
+        // Verbindet die Cover-Daten mit den Spielen
+        const covers = coverResponse.data;
+        const gamesWithCovers = results.map(game => {
+          const cover = covers.find(cover => cover.game === game.id);
+          return { ...game, coverUrl: cover ? cover.url : null };
+        });
+
+        // Setzt die kombinierten Daten im State
+        setGames(gamesWithCovers);
+        setLoading(false);
       } catch (error) {
-        // Fehlerbehandlung
-        console.error('Error fetching games:', error);
-        setError('Failed to load games');
+        console.error('Error fetching games or covers:', error);
+        setError('Failed to load games or covers');
         setLoading(false); 
       }
     };
+    
+    fetchGamesWithCovers();
 
-     fetchGames(); 
   }, []); 
+
 
   if (loading) {
     return <div>Loading...</div>; 
@@ -40,11 +65,11 @@ const Home = () => {
       {games.map((game, index) => (
         <div
           key={index}
-          className="item relative border-12 border-black hover:border-4 hover:border-[#1DD0E0] rounded-lg w-1/10 min-w-[200px] h-80 bg-[#141414]"
-        >
+          className="item relative border-10 border-black hover:border-4 hover:border-[#1DD0E0] rounded-lg w-full min-w-[200px] h-80 bg-[#141414]"
+          >
           <div
             className="absolute inset-0 bg-cover bg-center rounded-lg"
-            style={{ backgroundImage: `url(${game.cover_url})` }} // TODO: Hierfür muss noch ein separater Endpunkt angesteuert werden, um das Cover zu holen
+            style={{ backgroundImage: `url(${game.cover_url})` }}
           ></div>
           <div className="absolute inset-0 bg-[#141414] bg-opacity-50 rounded-lg"></div>
           <button

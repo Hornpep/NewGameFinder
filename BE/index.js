@@ -23,11 +23,10 @@ import {
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-// app.use(cors({
-//   origin: "http://localhost:8080",
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-// }));
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use('/auth', authRouter);
 
 const PORT = process.env.PORT || 8080;
@@ -55,6 +54,11 @@ app.get('/upcoming-games', fetchUpcomingGames);
 app.post('/wishlists', createWishlist);
 app.get('/users/:userId/wishlists', getWishlistsByUserId);
 app.delete('/wishlists/:id', deleteWishlist);
+
+// Fange alle nicht definierten Routen ab
+app.use((req, res, next) => {
+  res.status(404).json({ error: 'Route not found' });
+});
 
 // Synchronisiere die Modelle mit der Datenbank und starte den Server
 sequelize

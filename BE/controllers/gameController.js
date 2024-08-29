@@ -34,7 +34,6 @@ export const fetchAllGames = async (req, res) => {
       `fields *; 
       limit 10;`,
       {
-        method: 'POST',
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
           Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
@@ -44,19 +43,18 @@ export const fetchAllGames = async (req, res) => {
     const allGames = response.data;
 
     res.json(allGames);
-    res.status(200).json({ message: 'Games fetched successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch from IGDB' });
+    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
 export const fetchUpcomingGames = async (req, res) => {
   try {
+    const currentTime = Math.floor(Date.now() / 1000);
     const response = await axios.post(
       'https://api.igdb.com/v4/release_dates/',
-      `fields *; where game.platforms = 48 & date > 1538129354; sort date asc;`,
+      `fields *; where game.platforms = 48 & date > ${currentTime}; sort date asc;`,
       {
-        method: 'POST',
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
           Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
@@ -67,7 +65,7 @@ export const fetchUpcomingGames = async (req, res) => {
 
     res.json(upcomingGames);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch upcoming games from IGDB' });
+    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
@@ -80,7 +78,6 @@ export const fetchSearch = async (req, res) => {
       `fields * ; search "${searchQuery}"; limit 10; `,
 
       {
-        method: 'POST',
         headers: {
           Accept: 'application/json',
           'Client-ID': process.env.IGDB_CLIENT_ID,
@@ -92,7 +89,7 @@ export const fetchSearch = async (req, res) => {
 
     res.json(searchResults);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch Search from IGDB' });
+    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
