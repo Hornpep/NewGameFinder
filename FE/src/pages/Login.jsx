@@ -21,9 +21,10 @@ export default function Login({ closeModal }) {
       if (!email || !password) throw new Error('All fields are required');
       setLoading(true);
       const response = await login({ email, password });
-      // Implement success logic here (e.g., redirect, close modal)
+      toast.success(res.success);
     } catch (error) {
       toast.error(error.message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -35,13 +36,15 @@ export default function Login({ closeModal }) {
       style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
     >
       <div className="w-96 h-auto  bg-black/30 rounded-lg text-white p-8 absolute top-40 left-1/2 transform -translate-x-1/2 mt-10 border-2 border-white/20 backdrop-blur shadow-[0_0_10px_rgba(0,0,0,0.2)]">
-        <form action="">
+      <form onSubmit={handleSubmit}>
           <h1 className="text-3xl text-center mb-8">Login</h1>
 
           <div className="relative w-full h-12 mb-8">
             <input
-              type="text"
-              placeholder="Username"
+              type="email"
+              placeholder="E-Mail"
+              name='email'
+              onChange={handleChange}
               required
               className="w-full h-full bg-transparent outline-none border-2 border-white/10 rounded-full text-base text-white py-3 pl-5 pr-12 placeholder-white"
             />
@@ -52,6 +55,8 @@ export default function Login({ closeModal }) {
             <input
               type="password"
               placeholder="Password"
+              name='password'
+              onChange={handleChange}
               required
               className="w-full h-full bg-transparent outline-none border-2 border-white/10 rounded-full text-base text-white py-3 pl-5 pr-12 placeholder-white"
             />
@@ -66,10 +71,7 @@ export default function Login({ closeModal }) {
             <a href="#" className="text-white hover:underline">Forgot password?</a>
           </div>
 
-          <button
-            type="submit"
-            className="w-full h-12 bg-primary-500 border-none outline-none rounded-full shadow-lg cursor-pointer text-base text-gray-800"
-          >
+          <button type="submit" className="w-full h-12 bg-primary-500 border-none outline-none rounded-full shadow-lg cursor-pointer text-base text-gray-800">
             Login
           </button>
 

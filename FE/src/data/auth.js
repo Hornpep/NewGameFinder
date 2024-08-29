@@ -1,8 +1,9 @@
 const API_URL = import.meta.env.VITE_APP_NEXTGAMEFINDER_API_URL;
 if(!API_URL) throw new Error('API_URL is not defined, please check your .env file');
-const baseUrl = `${API_URL}/auth`;
+const baseURL = `${API_URL}/auth`;
 
 export const signup = async formData => {
+  console.log(formData);
     const res = await fetch(`${baseURL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -21,12 +22,13 @@ export const signup = async formData => {
 }
 
 export const login = async formData => {
+  console.log(formData);
     const res = await fetch(`${baseURL}/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
         credentials: 'include',
-        });
+    });
     if (!res.ok) {
         const errorData = await res.json();
         if (!errorData.error) {
@@ -36,7 +38,7 @@ export const login = async formData => {
     }
     const data = await res.json();
     return data;
-};
+}
 
   export const whoAmI = async () => {
     const res = await fetch(`${baseURL}/whoAmI`, { credentials: 'include' });
