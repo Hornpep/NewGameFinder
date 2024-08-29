@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../context';
 import { login } from '../data/auth';
 import backgroundImage from '../assets/desk-bg-pic.jpg';
 
 export default function Login({ closeModal }) {
+  const location = useLocation();
+  const { isAuthenticated, setCheckSession, setIsAuthenticated } = useAuth();
   const [{ email, password }, setForm] = useState({
     email: '',
     password: ''
@@ -21,6 +25,8 @@ export default function Login({ closeModal }) {
       if (!email || !password) throw new Error('Alle Felder sind erforderlich');
       setLoading(true);
       const response = await login({ email, password });
+      setIsAuthenticated(true);
+      setCheckSession(true);
   
       if (response.success) {
         toast.success('Login erfolgreich');
@@ -37,6 +43,8 @@ export default function Login({ closeModal }) {
       setLoading(false);
     }
   };
+
+  if (isAuthenticated) return <Navigate to={location.state?.next || '/'} />;
 
   return (
     <div 

@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
-import { toast }  from 'react-toastify';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../context';
 import { signup } from '../data/auth.js';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 import backgroundImage from '../assets/desk-bg-pic.jpg';
 
+
 export default function Signup() {
+  const { isAuthenticated, setCheckSession, setIsAuthenticated } = useAuth();
   const [{ username, email, password, confirmPassword }, setFormData] = useState({
     username: '',
     email: '',
@@ -19,11 +23,17 @@ export default function Signup() {
   const handleSubmit = async e => {
     try {
       e.preventDefault();
-      if (!username || !email || !password || !confirmPassword)
+
+      if (!username || !email || !password || !confirmPassword) 
         throw new Error('All fields are required');
-      if (password !== confirmPassword) throw new Error('Passwords do not match');
+      if (password !== confirmPassword) 
+        throw new Error('Passwords do not match');
+      if (password.length < 8) 
+        throw new Error('Password must be at least 8 characters long');
+
       setLoading(true);
       const res = await signup({ username, email, password });
+      setIsAuthenticated(true);
       setCheckSession(true);
       toast.success(res.success)
     } catch (error) {
@@ -34,13 +44,15 @@ export default function Signup() {
     }
   };
 
+  if (isAuthenticated) return <Navigate to='/' />;
+
   return (
     <div 
       className="flex justify-center items-center min-h-screen"
       style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
     >
       <div className="w-96 h-auto bg-black/30 rounded-lg text-white p-8 absolute top-40 left-1/2 transform -translate-x-1/2 mt-10 border-2 border-white/20 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-      <form  onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
           <h1 className="text-3xl text-center mb-8">Sign Up</h1>
 
           <div className="relative w-full h-12 mb-8">
