@@ -30,8 +30,8 @@ export const getGameById = async (req, res) => {
 export const fetchAllGames = async (req, res) => {
   try {
     const response = await axios.post(
-      'https://api.igdb.com/v4/games/',
-      `fields name,category,cover,first_release_date,genres,involved_companies,name,platforms,summary; 
+      'https://api.igdb.com/v4/games',
+      `fields *; 
       limit 10;`,
       {
         method: 'POST',

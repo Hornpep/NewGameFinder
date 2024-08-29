@@ -11,8 +11,10 @@ const Home = () => {
       try {
         // API-Anfrage, um die kommenden Spiele zu holen
         const response = await axios.get('http://localhost:8080/all-games'); 
-        setGames(response.data); 
-        setLoading(false); 
+        // setGames(response.data); 
+        // setLoading(false); 
+        const results = response.data;
+        setGames(results);
       } catch (error) {
         // Fehlerbehandlung
         console.error('Error fetching games:', error);
@@ -21,7 +23,7 @@ const Home = () => {
       }
     };
 
-    fetchGames(); 
+     fetchGames(); 
   }, []); 
 
   if (loading) {
