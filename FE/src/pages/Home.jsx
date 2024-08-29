@@ -7,49 +7,45 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchGamesWithCovers = async () => {
-      try {
-        // API-Anfrage, um die kommenden Spiele zu holen
-        const response = await axios.get('http://localhost:8080/all-games');  
-        const results = response.data;
-
-        const gameIds = results.map(game => game.id);
-
-        // API-Anfrage, um die Cover zu holen
-        const coverResponse = await axios.post(
-          'https://api.igdb.com/v4/covers',
-          `fields alpha_channel,animated,checksum,game,game_localization,height,image_id,url,width; where game = (${gameIds.join(',')});`,
-          {
-            headers: {
-              'Accept': 'application/json',
-              'Client-ID': process.env.REACT_APP_IGDB_CLIENT_ID,  
-              'Authorization': `Bearer ${process.env.REACT_APP_IGDB_ACCESS_TOKEN}`, 
-            }
-          }
-        );
-
-
-        // Verbindet die Cover-Daten mit den Spielen
-        const covers = coverResponse.data;
-        const gamesWithCovers = results.map(game => {
-          const cover = covers.find(cover => cover.game === game.id);
-          return { ...game, coverUrl: cover ? cover.url : null };
-        });
-
-        // Setzt die kombinierten Daten im State
-        setGames(gamesWithCovers);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching games or covers:', error);
-        setError('Failed to load games or covers');
-        setLoading(false); 
-      }
-    };
-    
-    fetchGamesWithCovers();
-
+     fetchGames(); 
   }, []); 
 
+  const fetchGames = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/all-games');  
+      const results = response.data;
+      
+      // Hol die Cover für jedes Spiel
+      const gamesWithCovers = await Promise.all(
+        results.map(async (game) => {
+          const cover = await fetchCover(game.id); // Hole das Cover für die spezifische Spiel-ID
+          return { ...game, cover_url: cover ? cover.url : null }; // Füge die Cover-URL hinzu
+        })
+      );
+      
+      setGames(gamesWithCovers);
+      setLoading(false); 
+
+    } catch (error) {
+      // Fehlerbehandlung
+      console.error('Error fetching games:', error);
+      setError('Error fetching games: ' + error.message);
+      setLoading(false); 
+    }
+  };
+
+  const fetchCover = async (game) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/searchCoverById?id=${game}`
+      );
+      const result = response.data;
+      return result[0];
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Covers:', error);
+      return null;
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>; 
@@ -69,7 +65,10 @@ const Home = () => {
           >
           <div
             className="absolute inset-0 bg-cover bg-center rounded-lg"
-            style={{ backgroundImage: `url(${game.cover_url})` }}
+            style={{ backgroundImage: `url(${
+              game.cover_url ||
+              'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg'
+            })` }} 
           ></div>
           <div className="absolute inset-0 bg-[#141414] bg-opacity-50 rounded-lg"></div>
           <button

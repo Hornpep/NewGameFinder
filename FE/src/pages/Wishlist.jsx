@@ -35,11 +35,11 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#141414] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
+    <div className="min-h-screen bg-[#141414]  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
       {data.map((item, index) => (
         <div
           key={index}
-          className="item relative border-12 border-black  hover:border-4 hover:border-[#1DD0E0] rounded-lg  w-1/10 min-w-[200px] h-80 bg-[#141414] "
+          className="item relative  border border-gray-700 hover:border-2 hover:border-[#1DD0E0] rounded-lg  w-1/10 min-w-[200px] h-80 bg-[#141414] "
           onClick={() => (window.location.href = `/GameDetails?id=${item.id}`)}
         >
           {/* Neue Seite mit Übergabe der ID öffnen - Achtung !! anpassen auf GameID */}

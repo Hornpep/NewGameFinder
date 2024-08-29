@@ -12,6 +12,8 @@ import {
   fetchAllGames,
   fetchSearch,
   fetchUpcomingGames,
+  fetchGamesById,
+  fetchCoverById,
 } from './controllers/gameController.js';
 import {
   createWishlist,
@@ -23,10 +25,13 @@ import {
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+// app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 app.use('/auth', authRouter);
 
 const PORT = process.env.PORT || 8080;
@@ -48,6 +53,8 @@ app.delete('/games/:id', deleteGame);
 app.get('/all-games', fetchAllGames);
 
 app.get('/search', fetchSearch);
+app.get('/searchGameByID', fetchGamesById); // Abruf Games für DetailPage
+app.get('/searchCoverByID', fetchCoverById); // Abruf Cover für DetailPage
 
 app.get('/upcoming-games', fetchUpcomingGames);
 
