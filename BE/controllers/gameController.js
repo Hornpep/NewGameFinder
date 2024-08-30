@@ -32,7 +32,7 @@ export const fetchAllGames = async (req, res) => {
     const response = await axios.post(
       'https://api.igdb.com/v4/games',
       `fields *; 
-      limit 10;`,
+      limit 14;`,
       {
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
