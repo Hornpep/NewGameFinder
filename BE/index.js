@@ -62,6 +62,11 @@ app.post('/wishlists', createWishlist);
 app.get('/users/:userId/wishlists', getWishlistsByUserId);
 app.delete('/wishlists/:id', deleteWishlist);
 
+// Fange alle nicht definierten Routen ab
+app.use((req, res, next) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
 // Synchronisiere die Modelle mit der Datenbank und starte den Server
 sequelize
   .sync({ alter: true }) // Dies aktualisiert die Datenbankstruktur basierend auf den Modellen
