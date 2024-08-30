@@ -22,7 +22,7 @@ const SearchResults = () => {
         `http://localhost:8080/search?search=${searchQuery}`
       );
       const results = response.data;
-      //console.log(results);
+      console.log(results);
       // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
       setResults(results);
     } catch (error) {
