@@ -54,7 +54,6 @@ const Gamedetails = () => {
       //console.log('ResultCover:', result);
       // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
       setCover(result);
-      console.log('Cover:', cover);
     } catch (error) {
       console.error('Fehler beim Abrufen der Suchergebnisse:', error);
       // Optional: Fehlerbehandlung anzeigen
@@ -116,7 +115,7 @@ const Gamedetails = () => {
                       </div>
                       <div className="flex flex-col p-2 gap-y-2 w-full">
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Rating: Text
+                          Rating: {Math.round(results[0].rating) / 10} /10
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
                           IGDB Id: {results[0].id}
