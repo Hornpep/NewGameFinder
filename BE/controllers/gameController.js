@@ -44,7 +44,9 @@ export const fetchAllGames = async (req, res) => {
 
     res.json(allGames);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
@@ -65,7 +67,9 @@ export const fetchUpcomingGames = async (req, res) => {
 
     res.json(upcomingGames);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
@@ -86,10 +90,12 @@ export const fetchSearch = async (req, res) => {
       }
     );
     const searchResults = response.data;
-
+    console.log(searchResults); // Ausgabe von Suchergebnissen auf der Console
     res.json(searchResults);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
