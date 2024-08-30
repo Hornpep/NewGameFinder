@@ -10,47 +10,50 @@ import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import Footer from './components/Footer';
 import Gamedetails from './pages/GameDetails';
+import { AuthContextProvider } from './context'; // Stelle sicher, dass der Pfad stimmt
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/Recommendations"
-          element={<Recommendations />}
-        />
-        <Route
-          path="/Wishlist"
-          element={<Wishlist />}
-        />
-        <Route
-          path="/Account"
-          element={<Account />}
-        />
-        <Route
-          path="/SearchResults"
-          element={<SearchResults />}
-        />
-        <Route
-          path="/Login"
-          element={<Login />}
-        />
-        <Route
-          path="/Signup"
-          element={<Signup />}
-        />
-        <Route
-          path="/Gamedetails"
-          element={<Gamedetails />}
-        />
-      </Routes>
-      <Footer />
-    </Router>
+    <AuthContextProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/"
+            element={<Home />}
+          />
+          <Route
+            path="/Recommendations"
+            element={<Recommendations />}
+          />
+          <Route
+            path="/Wishlist"
+            element={<Wishlist />}
+          />
+          <Route
+            path="/Account"
+            element={<Account />}
+          />
+          <Route
+            path="/SearchResults"
+            element={<SearchResults />}
+          />
+          <Route
+            path="/Login"
+            element={<Login />}
+          />
+          <Route
+            path="/Signup"
+            element={<Signup />}
+          />
+          <Route
+            path="/Gamedetails"
+            element={<Gamedetails />}
+          />
+        </Routes>
+        <Footer />
+      </Router>
+    </AuthContextProvider>
   );
 };
 
