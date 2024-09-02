@@ -53,7 +53,8 @@ export const fetchUpcomingGames = async (req, res) => {
     const currentTime = Math.floor(Date.now() / 1000);
     const response = await axios.post(
       'https://api.igdb.com/v4/release_dates/',
-      `fields *; where game.platforms = 48 & date > ${currentTime}; sort date asc;`,
+      `fields *; date > ${currentTime}; sort date asc;
+      limit 4;`,
       {
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
