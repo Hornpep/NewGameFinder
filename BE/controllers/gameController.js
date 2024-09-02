@@ -79,7 +79,7 @@ export const fetchSearch = async (req, res) => {
 
     const response = await axios.post(
       'https://api.igdb.com/v4/games',
-      `fields * ; search "${searchQuery}"; limit 10; `,
+      `fields * ; search "${searchQuery}"; limit 14; `,
 
       {
         headers: {
@@ -140,6 +140,7 @@ export const fetchCoverById = async (req, res) => {
     const response = await axios.post(
       'https://api.igdb.com/v4/covers',
       `fields * ; where game =  ${searchQuery}; `,
+      //`fields *; where game in (45,65,66)`,
 
       {
         method: 'POST',

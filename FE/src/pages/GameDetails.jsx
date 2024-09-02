@@ -18,18 +18,16 @@ const Gamedetails = () => {
 
   const fetchResults = async (searchQuery) => {
     try {
-      //console.log('test');
       // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
       const response = await axios.get(
         `http://localhost:8080/searchGameById?id=${searchQuery}`
       );
       const result = response.data;
-      //console.log('Results:', result);
+
       // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
       setResults(result);
-      //console.log('results.name:', result[0].name);
+
       fetchCover(result[0].id); // Cover Bild abrufen
-      //console.log('Restult ID:', result[0].id);
     } catch (error) {
       console.error('Fehler beim Abrufen der Suchergebnisse:', error);
       // Optional: Fehlerbehandlung anzeigen
