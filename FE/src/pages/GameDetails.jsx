@@ -61,16 +61,12 @@ const Gamedetails = () => {
   };
 
   const addToWishlist = async () => {
-    // Statische Werte für userId und gameId
-    /*  const staticUserId = 1; // Beispielwert für userId
-    const staticGameId = 12345; // Beispielwert für gameId */
-
+    console.log('result id:', results[0].id);
     // Daten, die an den Server gesendet werden sollen
+
     const wishlistData = {
-      /*  userId: staticUserId,
-      gameId: staticGameId, */
-      id: 27,
-      igdb_id: 67890, // Beispielwert für igdb_id
+      users_id: 15,
+      igdb_id: 33, // Beispielwert für igdb_id
       name: 'Game Title', // Beispielwert für name
       cover_url: 'https://example.com/cover.jpg', // Beispielwert für cover_url
       genre: 'Action', // Beispielwert für genre
@@ -153,7 +149,7 @@ const Gamedetails = () => {
                           Developer: Suno Tec Studio
                         </p>
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Publisher: Sony Publisher: Sony
+                          Publisher: Sony
                         </p>
                       </div>
                       <div className="flex flex-col p-2 gap-y-2 w-full">
@@ -164,10 +160,10 @@ const Gamedetails = () => {
                           IGDB Id: {results[0].id}
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Age Rating: USK 12 Age Rating: USK 12
+                          Age Rating: USK 12
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Languages: Deutsch Languages: Deutsch
+                          Languages: Deutsch
                         </p>
                       </div>
                     </div>

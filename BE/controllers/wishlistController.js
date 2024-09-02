@@ -5,9 +5,9 @@ import Game from '../models/Game.js';
 export const createWishlist = async (req, res) => {
   try {
     const wishlist = await Wishlist.create({
-      id: req.body.id, // nötig
-      userId: req.body.userId, // Assuming the user ID is provided in the request body // nötig
-      gameId: req.body.gameId, // Assuming the game ID is provided in the request body  // nötig
+      //id: req.body.id, // nötig
+      users_id: req.body.users_id, // Assuming the user ID is provided in the request body // nötig
+      //gameId: req.body.gameId, // Assuming the game ID is provided in the request body  // nötig
       // Optional: zusätzliche Felder
       igdb_id: req.body.igdb_id, //nötig
       name: req.body.name, //nötig
@@ -16,7 +16,7 @@ export const createWishlist = async (req, res) => {
       release_date: req.body.release_date,
       platform: req.body.platform,
       involved_companies: req.body.involved_companies,
-      about: req.body.about,
+      //about: req.body.about,
     });
     console.log(wishlist);
     res.status(201).json(wishlist);
