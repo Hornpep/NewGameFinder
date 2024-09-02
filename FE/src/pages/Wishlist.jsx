@@ -67,19 +67,3 @@ const Wishlist = () => {
 };
 
 export default Wishlist;
-
-{
-  /* <div key={index} class="de-item" style="background-size: cover; background-repeat: no-repeat;">
-<div class="d-overlay" style="background-size: cover; background-repeat: no-repeat;">
-    <div class="d-label" style="background-size: cover; background-repeat: no-repeat;">
-        20% OFF
-    </div>
-    <div class="d-text" style="background-size: cover; background-repeat: no-repeat;">
-        <h4>{item.name}</h4>
-        <p class="d-price">Starting at <span class="price">$14.99</span></p>
-        <a class="btn-main btn-fullwidth" href="pricing-table-one.html" data-hover="Order Now"><span>Order Now</span></a>
-    </div>
-</div>
-<img src={item.cover_url} class="img-fluid" alt="">
-</div> */
-}
