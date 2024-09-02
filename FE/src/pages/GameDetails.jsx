@@ -153,7 +153,7 @@ const Gamedetails = () => {
                           Developer: Suno Tec Studio
                         </p>
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Publisher: Sony
+                          Publisher: Sony Publisher: Sony
                         </p>
                       </div>
                       <div className="flex flex-col p-2 gap-y-2 w-full">
@@ -164,10 +164,10 @@ const Gamedetails = () => {
                           IGDB Id: {results[0].id}
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Age Rating: USK 12
+                          Age Rating: USK 12 Age Rating: USK 12
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Languages: Deutsch
+                          Languages: Deutsch Languages: Deutsch
                         </p>
                       </div>
                     </div>
