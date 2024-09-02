@@ -27,6 +27,8 @@ const Gamedetails = () => {
       // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
       setResults(result);
 
+      //console.log(result);
+
       fetchCover(result[0].id); // Cover Bild abrufen
     } catch (error) {
       console.error('Fehler beim Abrufen der Suchergebnisse:', error);
@@ -58,6 +60,46 @@ const Gamedetails = () => {
     }
   };
 
+  const addToWishlist = async () => {
+    // Statische Werte für userId und gameId
+    /*  const staticUserId = 1; // Beispielwert für userId
+    const staticGameId = 12345; // Beispielwert für gameId */
+
+    // Daten, die an den Server gesendet werden sollen
+    const wishlistData = {
+      /*  userId: staticUserId,
+      gameId: staticGameId, */
+      id: 27,
+      igdb_id: 67890, // Beispielwert für igdb_id
+      name: 'Game Title', // Beispielwert für name
+      cover_url: 'https://example.com/cover.jpg', // Beispielwert für cover_url
+      genre: 'Action', // Beispielwert für genre
+      release_date: '2024-09-02T00:00:00Z', // Beispielwert für release_date
+      platform: 'PC', // Beispielwert für platform
+      involved_companies: 'Company Name', // Beispielwert für involved_companies
+      about: 'This is an amazing game.', // Beispielwert für about
+    };
+
+    try {
+      // Fetch-Aufruf zur Übergabe der Daten an den Server
+      const response = await fetch('http://localhost:8080/wishlists', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(wishlistData), // Daten in JSON-Format umwandeln
+      });
+
+      if (!response.ok) {
+        throw new Error('Fehler beim Hinzufügen zur Wishlist');
+      }
+
+      alert('Zur Wishlist hinzugefügt');
+    } catch (error) {
+      alert(`Fehler: ${error.message}`);
+    }
+  };
+
   /*   if (cover.length < 1)
     return (
       <div className="p-28">
@@ -84,7 +126,10 @@ const Gamedetails = () => {
                 <div className="flex flex-row">
                   <div className="flex flex-col  py-2">
                     <div className="md-2 space-y-2 mb-2">
-                      <button className="p-2 justify-center  text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex flex-col items-center ">
+                      <button
+                        onClick={addToWishlist}
+                        className="p-2 justify-center  text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex flex-col items-center "
+                      >
                         <span className="text-sm">Add to</span>
                         <span className="text-lg font-bold">Wishlist</span>
                       </button>
@@ -99,16 +144,16 @@ const Gamedetails = () => {
                     <div className="flex flex-row p-2   justify-center">
                       <div className="flex flex-col p-2 gap-y-2 w-full">
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Genre: Text
+                          Genre: Strategie
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Release Date: Text
+                          Release Date: 20.02.2000
                         </p>
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Developer: Text
+                          Developer: Suno Tec Studio
                         </p>
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Publisher: Text
+                          Publisher: Sony
                         </p>
                       </div>
                       <div className="flex flex-col p-2 gap-y-2 w-full">
@@ -119,10 +164,10 @@ const Gamedetails = () => {
                           IGDB Id: {results[0].id}
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Age Rating: Text
+                          Age Rating: USK 12
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Languages: Text
+                          Languages: Deutsch
                         </p>
                       </div>
                     </div>
