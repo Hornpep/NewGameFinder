@@ -45,7 +45,7 @@ const SearchResults = () => {
           url: fetchedCover[index][0].url,
         }); // Objekt mit name und id hinzufügen
       });
-      //console.log(test);
+      console.log(test);
       setResults(test);
     } catch (error) {
       console.error('Fehler beim Abrufen der Suchergebnisse:', error);
