@@ -99,16 +99,16 @@ const Gamedetails = () => {
                     <div className="flex flex-row p-2   justify-center">
                       <div className="flex flex-col p-2 gap-y-2 w-full">
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Genre: Text
+                          Genre: Arcade
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Release Date: Text
+                          Release Date: 20.12.2000
                         </p>
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Developer: Text
+                          Developer: Song U Studios
                         </p>
                         <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Publisher: Text
+                          Publisher: Sony
                         </p>
                       </div>
                       <div className="flex flex-col p-2 gap-y-2 w-full">
@@ -119,10 +119,10 @@ const Gamedetails = () => {
                           IGDB Id: {results[0].id}
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Age Rating: Text
+                          Age Rating: USK 12
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Languages: Text
+                          Languages: Deutsch
                         </p>
                       </div>
                     </div>
