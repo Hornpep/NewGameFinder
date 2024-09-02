@@ -91,7 +91,7 @@ export const fetchSearch = async (req, res) => {
       }
     );
     const searchResults = response.data;
-    console.log(searchResults); // Ausgabe von Suchergebnissen auf der Console
+    //console.log(searchResults); // Ausgabe von Suchergebnissen auf der Console
     res.json(searchResults);
   } catch (error) {
     res
