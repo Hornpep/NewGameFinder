@@ -36,59 +36,6 @@ const Home = () => {
     }
   };
 
-  const fetchUpcomingGames = async () => {
-    try {
-      // Schritt 1: Hole die kommenden Spiele anhand der Veröffentlichungsdaten
-      const releaseDatesResponse = await axios.post(
-        'https://api.igdb.com/v4/release_dates/',
-        `fields game, human, date; where date > ${Math.floor(Date.now() / 1000)}; sort date asc;`,
-        {
-          headers: {
-            'Client-ID': '5xa4vrtjra9ml7zvr9gq9k3oxkhrq9',
-            Authorization: 'Bearer r46on0x53g6dhkdy380ebrfer90xf4',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      const releaseDates = releaseDatesResponse.data;
-
-      // Schritt 2: Hole die Spieldetails anhand der IDs, die wir aus den Veröffentlichungsdaten erhalten haben
-      const gameIds = releaseDates.map((release) => release.game);
-      const uniqueGameIds = [...new Set(gameIds)]; // Entferne Duplikate
-
-      const gamesResponse = await axios.post(
-        'https://api.igdb.com/v4/games/',
-        `fields id, name, cover; where id = (${uniqueGameIds.join(',')});`,
-        {
-          headers: {
-            'Client-ID': '5xa4vrtjra9ml7zvr9gq9k3oxkhrq9',
-            Authorization: 'Bearer r46on0x53g6dhkdy380ebrfer90xf4',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      const gamesData = gamesResponse.data;
-
-      // Schritt 3: Hole die Cover für jedes Spiel
-      const upcomingGamesWithCovers = await Promise.all(
-        gamesData.map(async (game) => {
-          const cover = await fetchCover(game.id);
-          return { ...game, cover_url: cover ? cover.url : null }; 
-        })
-      );
-
-      setUpcomingGames(upcomingGamesWithCovers);
-      setLoading(false); 
-
-    } catch (error) {
-      console.error('Error fetching upcoming games:', error);
-      setError('Error fetching upcoming games: ' + error.message);
-      setLoading(false); 
-    }
-  };
-
   const fetchCover = async (game) => {
     try {
       const response = await axios.get(
@@ -101,6 +48,35 @@ const Home = () => {
       return null;
     }
   };
+
+
+
+
+  const fetchUpcomingGames = async () => {
+    try {
+      // Schritt 1: Hole die kommenden Spiele anhand der Veröffentlichungsdaten
+      const response = await axios.get('http://localhost:8080/upcoming-games');
+      const results = response.data;
+
+      // Hol die Cover für jedes Spiel
+      const gamesWithCovers = await Promise.all(
+        results.map(async (game) => {
+          const cover = await fetchCover(game.id); // Hole das Cover für die spezifische Spiel-ID
+          return { ...game, cover_url: cover ? cover.url : null }; // Füge die Cover-URL hinzu
+        })
+      );
+
+
+      setUpcomingGames(gamesWithCovers);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching upcoming games:', error);
+      setError('Error fetching upcoming games: ' + error.message);
+      setLoading(false); 
+    }
+  };
+
+  
 
   if (loading) {
     return (
@@ -187,7 +163,7 @@ const Home = () => {
 
 
       {/* Upcoming Games Section */}
-      <div className="p-28 bg-[#1a1a1a] w-full">
+      <div className="p-28 w-full">
         <h2 className="text-4xl font-bold text-white mb-8">Upcoming Games</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-14">
           {upcomingGames.map((game, index) => (

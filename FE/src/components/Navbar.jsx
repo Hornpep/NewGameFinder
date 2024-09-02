@@ -26,20 +26,24 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex flex-row fixed top-0 left-0 w-full z-50 text-[#1CE0AF] bg-[#141414] p-6">        
+      <nav className="flex flex-row fixed font-heading font-bold top-0 left-0 w-full z-50 text-primary-500 bg-[#141414] p-6">        
         <div className="flex mx-14">
           <Link
             to="/"
-            className="text-3xl font-heading font-extrabold text-[#1CE0AF]"
+            className="text-3xl"
             onClick={() => handleLinkClick('/')}
           >
-            LOGO
+            <img 
+              src="/src/assets/NextGameFinder-Logo.png"  
+              alt="NextGameFindrr"
+              className="h-14 w-auto"
+            />
           </Link>
         </div>
-        <div className="flex-1 hidden font-heading font-extrabold md:flex justify-center space-x-4">
+        <div className="flex-1 hidden md:flex justify-center space-x-4">
           <Link
             to="/"
-            className={`text-2xl border shadow-lg font-heading px-3 py-2 rounded-md ${
+            className={`text-2xl border shadow-lg px-3 py-2 rounded-md ${
               activeLink === '/'
                 ? 'border-[#1CE0AF] text-[#1CE0AF]'
                 : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
@@ -82,7 +86,7 @@ const Navbar = () => {
             Account
           </Link>
 
-          <Search />
+          <Search/>
 
           {isAuthenticated ? (
             <button
