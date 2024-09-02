@@ -44,7 +44,9 @@ export const fetchAllGames = async (req, res) => {
 
     res.json(allGames);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
@@ -66,7 +68,9 @@ export const fetchUpcomingGames = async (req, res) => {
 
     res.json(upcomingGames);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
@@ -76,7 +80,7 @@ export const fetchSearch = async (req, res) => {
 
     const response = await axios.post(
       'https://api.igdb.com/v4/games',
-      `fields * ; search "${searchQuery}"; limit 10; `,
+      `fields * ; search "${searchQuery}"; limit 14; `,
 
       {
         headers: {
@@ -87,10 +91,12 @@ export const fetchSearch = async (req, res) => {
       }
     );
     const searchResults = response.data;
-
+    console.log(searchResults); // Ausgabe von Suchergebnissen auf der Console
     res.json(searchResults);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch from IGDB', details: error.message });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch from IGDB', details: error.message });
   }
 };
 
@@ -135,6 +141,7 @@ export const fetchCoverById = async (req, res) => {
     const response = await axios.post(
       'https://api.igdb.com/v4/covers',
       `fields * ; where game =  ${searchQuery}; `,
+      //`fields *; where game in (45,65,66)`,
 
       {
         method: 'POST',
