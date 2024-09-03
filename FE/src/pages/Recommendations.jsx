@@ -73,6 +73,43 @@ const Recommendations = () => {
     }
   }, [data]);
 
+  const addToWishlist = async () => {
+    console.log('result 0 gamedetails:', results[0]);
+    // Daten, die an den Server gesendet werden sollen
+
+    const wishlistData = {
+      users_id: 15,
+      igdb_id: results[0].id, // Beispielwert für igdb_id
+      name: `${results[0].name}`, // Beispielwert für name
+      cover_url: `${cover[0].url}`, // Beispielwert für cover_url
+      genre: results[0].genres, // Beispielwert für genre
+      release_date: '2024-09-02T00:00:00Z', // Beispielwert für release_date
+      platform: results[0].platforms, // Beispielwert für platform
+      involved_companies: [3], // Beispielwert für involved_companies
+      similar_games: results[0].genres,
+      //about: `${results[0].summary}`, // Beispielwert für about
+    };
+
+    try {
+      // Fetch-Aufruf zur Übergabe der Daten an den Server
+      const response = await fetch('http://localhost:8080/wishlists', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(wishlistData), // Daten in JSON-Format umwandeln
+      });
+
+      if (!response.ok) {
+        throw new Error('Fehler beim Hinzufügen zur Wishlist');
+      }
+
+      toast.success('Zur Wishlist hinzugefügt');
+    } catch (error) {
+      alert(`Fehler: ${error.message}`);
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-[#141414] justify-center ">
       <div className="flex h-full  bg-[#141414]  p-28 w-1/2 justify-center">
@@ -91,13 +128,22 @@ const Recommendations = () => {
                 </div>
                 <div className="flex flex-row">
                   <div className="flex flex-col  py-2">
+                    <div className="md-2 space-y-2 mb-2 ">
+                      <button
+                        onClick={addToWishlist}
+                        className="p-2 justify-center  text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex flex-col items-center "
+                      >
+                        <span className="text-sm">Add to</span>
+                        <span className="text-lg font-bold">Wishlist</span>
+                      </button>
+                    </div>
                     <div className="md-2 space-y-2 mb-2">
                       <button
                         onClick={() => window.history.back()}
                         className="w-full p-2 justify-center items-center text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex"
                       >
                         <span className="text-lg font-bold items-center justify-center">
-                          Zurück
+                          Back
                         </span>
                       </button>
                     </div>
@@ -134,7 +180,7 @@ const Recommendations = () => {
                           Age Rating: USK 12
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Languages: Deutsch
+                          Languages: German
                         </p>
                       </div>
                     </div>

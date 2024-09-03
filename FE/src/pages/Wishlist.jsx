@@ -34,11 +34,7 @@ const Wishlist = () => {
           <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
         </div>
         <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
-<<<<<<< HEAD
-          NextGameFinder lädt...
-=======
           Finding games...
->>>>>>> main
         </span>
       </div>
     );
@@ -49,30 +45,24 @@ const Wishlist = () => {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-[#141414] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
-      {data.map((data, index) => (
-=======
     <div className="min-h-screen bg-[#141414]  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
       <div className="relative h-[30vh] w-full flex items-center justify-center bg-cover bg-center">
-          <div className="relative z-10 text-center px-4">
-            <h2 className="text-5xl font-bold mb-4 text-primary-500">
-              Your wishlist
-            </h2>
-            <p className="text-xl font-light">
-              Here you can find all the games you added to your wishlist
-            </p>
-          </div>
+        <div className="relative z-10 text-center px-4">
+          <h2 className="text-5xl font-bold mb-4 text-primary-500">
+            Your wishlist
+          </h2>
+          <p className="text-xl font-light">
+            Here you can find all the games you added to your wishlist
+          </p>
         </div>
-      
-      
+      </div>
+
       {data.map((item, index) => (
->>>>>>> main
         <div
           key={index}
           className="item relative border  border-gray-700 hover:border-2 hover:border-[#1DD0E0] rounded-lg w-1/10 min-w-[200px] h-80 bg-[#141414] "
           onClick={() =>
-            (window.location.href = `/GameDetails?id=${data.igdb_id}`)
+            (window.location.href = `/GameDetails?id=${item.igdb_id}`)
           } // Neue Seite mit Übergabe der ID öffnen
         >
           <div className="relative h-full w-full flex items-center justify-center">
@@ -80,7 +70,7 @@ const Wishlist = () => {
               className="bg-contain bg-center bg-no-repeat rounded-lg flex-grow"
               style={{
                 backgroundImage: `url(${
-                  data.cover_url ||
+                  item.cover_url ||
                   'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg'
                 })`,
                 height: '50%', // Setzt das Bild auf die Hälfte der Höhe des Containers
@@ -105,7 +95,7 @@ const Wishlist = () => {
           </button>
           <div className="absolute bottom-0 w-full flex  justify-center flex-col  ">
             <h2 className="relative z-10 text-lg  font-semibold text-center w-full text-[#1CE0AF] mt-auto p-4">
-              {data.name}
+              {item.name}
             </h2>
             {/*             <h2 className="relative z-10 text-lg font-semibold text-center justify-center w-full text-[#1CE0AF] mt-auto p-4">
               Game-Id: {result.id}
