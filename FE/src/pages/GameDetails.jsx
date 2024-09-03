@@ -66,7 +66,7 @@ const Gamedetails = () => {
 
     const wishlistData = {
       users_id: 15,
-      igdb_id: 33, // Beispielwert für igdb_id
+      igdb_id: results[0].id, // Beispielwert für igdb_id
       name: 'Game Title', // Beispielwert für name
       cover_url: 'https://example.com/cover.jpg', // Beispielwert für cover_url
       genre: 'Action', // Beispielwert für genre
