@@ -23,6 +23,7 @@ import {
   deleteGame,
 } from './controllers/wishlistController.js';
 import { getUser } from './controllers/userController.js';
+import { getUser } from './controllers/userController.js';
 
 const app = express();
 app.use(express.json());
@@ -43,7 +44,7 @@ app.get('/', (req, res) => {
 
 app.get('/users/:id', getUser);
 // app.post('/users', userController.createUser);
-// app.get('/users/:id', userController.getUserById);
+app.get('/users/:id', getUser);
 // app.put('/users/:id', userController.updateUser);
 // app.delete('/users/:id', userController.deleteUser);
 
