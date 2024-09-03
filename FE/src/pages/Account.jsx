@@ -41,14 +41,14 @@ const Account = () => {
           <div className="flex-1">
             <div className="mb-4">
               <label className="block text-sm font-medium text-[#1CE0AF]" htmlFor="username">User:</label>
-              <p id="username" className="bg-[#1C1C1C] p-2 rounded border border-[#1CE0AF]">
-                {userData.username}
+              <p type="username" id="username" className="bg-[#1C1C1C] p-2 rounded border border-[#1CE0AF]">
+                {userData.success.username}
               </p>
             </div>
             <div className="mb-4">
               <label className="block text-sm font-medium text-[#1CE0AF]" htmlFor="email">Email:</label>
-              <p id="email" className="bg-[#1C1C1C] p-2 rounded border border-[#1CE0AF]">
-                {userData.email}
+              <p type="email" id="email" className="bg-[#1C1C1C] p-2 rounded border border-[#1CE0AF]">
+                {userData.success.email}
               </p>
             </div>
             <button className="mt-2 px-4 py-2 bg-[#1CE0AF] text-black font-semibold rounded hover:bg-[#1DD0E0]" aria-label="Edit Account">
