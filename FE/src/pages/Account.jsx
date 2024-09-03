@@ -179,7 +179,7 @@ const Account = () => {
                 )}
                 {isEditing ? (
                   <button type="submit" className="mt-2 px-4 py-2 bg-[#1CE0AF] text-black font-semibold rounded hover:bg-[#1DD0E0]" aria-label="Submit Changes">
-                    Submit
+                    Save
                   </button>
                 ) : (
                   <button type="button" onClick={handleEditClick} className="mt-2 px-4 py-2 bg-[#1CE0AF] text-black font-semibold rounded hover:bg-[#1DD0E0]" aria-label="Edit Account">
