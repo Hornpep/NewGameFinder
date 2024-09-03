@@ -15,8 +15,13 @@ const SearchResults = () => {
     }
   }, [query]);
 
+  // Funktion, die eine Pause erstellt
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const fetchResults = async (searchQuery) => {
     try {
+      //setResults([]);
+
       //console.log('test');
       // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
       const response = await axios.get(
@@ -43,9 +48,11 @@ const SearchResults = () => {
           name: result.name,
           id: result.id,
           url: fetchedCover[index][0].url,
+          /*          similar_games: result.similar_games,
+          rating: result.rating, */
         }); // Objekt mit name und id hinzufügen
       });
-      console.log(test);
+      //console.log(test);
       setResults(test);
     } catch (error) {
       console.error('Fehler beim Abrufen der Suchergebnisse:', error);
@@ -65,6 +72,7 @@ const SearchResults = () => {
       //console.log('ResultCover:', result);
       // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
       //setCover(result);
+      sleep(500); // Macht 1sec Pause :)
       return result;
     } catch (error) {
       console.error('Fehler beim Abrufen der Suchergebnisse:', error);

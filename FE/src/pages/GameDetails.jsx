@@ -61,7 +61,7 @@ const Gamedetails = () => {
   };
 
   const addToWishlist = async () => {
-    console.log('result id:', results[0].id);
+    console.log('result 0 gamedetails:', results[0]);
     // Daten, die an den Server gesendet werden sollen
 
     const wishlistData = {
