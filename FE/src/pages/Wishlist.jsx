@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Wishlist = () => {
   const [data, setData] = useState([]);
@@ -45,14 +46,16 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#141414]  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
+    <div className="min-h-screen bg-[#141414] p-28 w-full dark:text-white">
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-14'>
       <div className="relative h-[30vh] w-full flex items-center justify-center bg-cover bg-center">
         <div className="relative z-10 text-center px-4">
           <h2 className="text-5xl font-bold mb-4 text-primary-500">
             Your wishlist
           </h2>
           <p className="text-xl font-light">
-            Here you can find all the games you added to your wishlist
+            Your favorite games are just a click away!
           </p>
         </div>
       </div>
@@ -82,16 +85,16 @@ const Wishlist = () => {
           </div>
           <div className="absolute inset-0 bg-[#141414] opacity-0 rounded-lg"></div>
           <button
-            className="absolute top-2 right-2 z-10 text-black "
+            className="absolute top-2 right-2 z-10 bg-[#1CE0AF] text-black px-4 py-2 rounded-md shadow hover:bg-[#17a2b8] "
             aria-label="Toggle Heart"
             onClick={(e) => {
-              // Ändern zu Delete Button ?
               e.preventDefault();
               e.stopPropagation();
-              window.alert('DELETED ?');
+              // Remove from wishlist function
+              toast.success('Removed from wishlist.');
             }}
           >
-            ❤️
+            Remove
           </button>
           <div className="absolute bottom-0 w-full flex  justify-center flex-col  ">
             <h2 className="relative z-10 text-lg  font-semibold text-center w-full text-[#1CE0AF] mt-auto p-4">
@@ -103,6 +106,8 @@ const Wishlist = () => {
           </div>
         </div>
       ))}
+      </div>
+      
     </div>
   );
 };
