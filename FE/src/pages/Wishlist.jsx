@@ -27,7 +27,17 @@ const Wishlist = () => {
   }, []);
 
   if (loading) {
-    return <p>Lade...</p>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#141414]">
+        <div className="relative w-24 h-24 animate-spin">
+          <div className="absolute inset-0 border-4 border-t-transparent border-white rounded-full animate-[spin_1s_linear_infinite]"></div>
+          <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
+        </div>
+        <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
+          Finding games...
+        </span>
+      </div>
+    );
   }
 
   if (error) {
@@ -36,6 +46,18 @@ const Wishlist = () => {
 
   return (
     <div className="min-h-screen bg-[#141414]  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
+      <div className="relative h-[30vh] w-full flex items-center justify-center bg-cover bg-center">
+          <div className="relative z-10 text-center px-4">
+            <h2 className="text-5xl font-bold mb-4 text-primary-500">
+              Your wishlist
+            </h2>
+            <p className="text-xl font-light">
+              Here you can find all the games you added to your wishlist
+            </p>
+          </div>
+        </div>
+      
+      
       {data.map((item, index) => (
         <div
           key={index}

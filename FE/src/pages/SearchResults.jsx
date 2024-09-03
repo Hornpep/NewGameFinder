@@ -88,7 +88,7 @@ const SearchResults = () => {
           <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
         </div>
         <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
-          NextGameFinder lädt...
+          Finding games...
         </span>
       </div>
     );
@@ -96,9 +96,13 @@ const SearchResults = () => {
 
   return (
     <div className="min-h-screen bg-[#141414] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
-      <h2 className="text-xl mb-4">
-        Suchergebnisse für: <span className="text-[#1CE0AF]">{query}</span>
-      </h2>
+      <div className="relative h-[30vh] w-full flex items-center justify-center bg-cover bg-center">
+          <div className="relative z-10 text-center px-4">
+            <h2 className="text-3xl font-bold mb-4 text-white">
+            Search results for: <span className="text-[#1CE0AF]">{query}</span>
+            </h2>
+          </div>
+        </div>
 
       {results.map((result, index) => (
         <div

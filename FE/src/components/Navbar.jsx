@@ -6,9 +6,7 @@ import { useAuth } from '../context';
 
 const Navbar = () => {
   const { isAuthenticated, signout, user } = useAuth();
-
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // State for LoginModal
-
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
 
@@ -16,7 +14,6 @@ const Navbar = () => {
     setActiveLink(path);
   };
 
-  // Open and close LoginModal
   const openLoginModal = () => {
     setIsLoginModalOpen(true);
   };
@@ -26,67 +23,39 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex flex-row fixed font-heading font-bold top-0 left-0 w-full z-50 text-primary-500 bg-[#141414] p-6">        
+      <nav className="flex flex-row fixed top-0 left-0 w-full z-50 p-4 bg-[#141414] text-white shadow-lg">
         <div className="flex mx-14">
-          <Link
-            to="/"
-            className="text-3xl"
-            onClick={() => handleLinkClick('/')}
-          >
+          <Link to="/" onClick={() => handleLinkClick('/')}>
             <img 
-              src="/src/assets/NextGameFinder-Logo.png"  
-              alt="NextGameFindrr"
-              className="h-14 w-auto"
+              src="/src/assets/NextGameFinder-Logo.png" 
+              alt="NextGameFinder" 
+              className="h-12 w-auto hover:opacity-90 transition-opacity duration-300"
             />
           </Link>
         </div>
-        <div className="flex-1 hidden md:flex justify-center space-x-4">
-          <Link
-            to="/"
-            className={`text-2xl border shadow-lg px-3 py-2 rounded-md ${
-              activeLink === '/'
-                ? 'border-[#1CE0AF] text-[#1CE0AF]'
-                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
-            }`}
-            onClick={() => handleLinkClick('/')}
-          >
-            Home
-          </Link>
-          <Link
-            to="/Recommendations"
-            className={`text-2xl border px-3 py-2 rounded-md ${
-              activeLink === '/Recommendations'
-                ? 'border-[#1CE0AF] text-[#1CE0AF]'
-                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
-            }`}
-            onClick={() => handleLinkClick('/Recommendations')}
-          >
-            Recommendations
-          </Link>
-          <Link
-            to="/Wishlist"
-            className={`text-2xl border px-3 py-2 rounded-md ${
-              activeLink === '/Wishlist'
-                ? 'border-[#1CE0AF] text-[#1CE0AF]'
-                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
-            }`}
-            onClick={() => handleLinkClick('/Wishlist')}
-          >
-            Wishlist
-          </Link>
-          <Link
-            to="/Account"
-            className={`text-2xl border px-3 py-2 rounded-md ${
-              activeLink === '/Account'
-                ? 'border-[#1CE0AF] text-[#1CE0AF]'
-                : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
-            }`}
-            onClick={() => handleLinkClick('/Account')}
-          >
-            Account
-          </Link>
 
-          <Search/>
+        <div className="flex-1 hidden md:flex justify-center space-x-6">
+          {[
+            { path: '/', label: 'Home' },
+            { path: '/Recommendations', label: 'Recommendations' },
+            { path: '/Wishlist', label: 'Wishlist' },
+            { path: '/Account', label: 'Account' },
+          ].map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`text-lg font-semibold px-4 py-2 rounded-md transition duration-300 ${
+                activeLink === link.path
+                  ? 'bg-[#1CE0AF] text-black'
+                  : 'bg-transparent text-white hover:bg-[#1CE0AF] hover:text-black'
+              }`}
+              onClick={() => handleLinkClick(link.path)}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          <Search />
 
           {isAuthenticated ? (
             <button
@@ -94,10 +63,10 @@ const Navbar = () => {
                 handleLinkClick('/Logout');
                 signout();
               }}
-              className={`text-2xl border px-3 py-2 rounded-md ${
+              className={`text-lg font-semibold px-4 py-2 rounded-md transition duration-300 ${
                 activeLink === '/Logout'
-                  ? 'border-[#1CE0AF] text-[#1CE0AF]'
-                  : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+                  ? 'bg-[#1CE0AF] text-black'
+                  : 'bg-transparent text-white hover:bg-[#1CE0AF] hover:text-black'
               }`}
             >
               Logout
@@ -108,24 +77,19 @@ const Navbar = () => {
                 handleLinkClick('/Login');
                 openLoginModal();
               }}
-              className={`text-2xl border px-3 py-2 rounded-md ${
+              className={`text-lg font-semibold px-4 py-2 rounded-md transition duration-300 ${
                 activeLink === '/Login'
-                  ? 'border-[#1CE0AF] text-[#1CE0AF]'
-                  : 'border-[#1CE0AF] text-[#fefefe] hover:text-[#1DD0E0] hover:border-[#1DD0E0]'
+                  ? 'bg-[#1CE0AF] text-black'
+                  : 'bg-transparent text-white hover:bg-[#1CE0AF] hover:text-black'
               }`}
             >
               Login
             </button>
           )}
-
         </div>
       </nav>
 
-      {/* Render LoginModal */}
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={closeLoginModal}
-      />
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </>
   );
 };
