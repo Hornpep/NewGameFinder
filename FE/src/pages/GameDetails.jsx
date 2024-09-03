@@ -67,8 +67,8 @@ const Gamedetails = () => {
     const wishlistData = {
       users_id: 15,
       igdb_id: results[0].id, // Beispielwert für igdb_id
-      name: 'Game Title', // Beispielwert für name
-      cover_url: 'https://example.com/cover.jpg', // Beispielwert für cover_url
+      name: `${results[0].name}`, // Beispielwert für name
+      cover_url: `${cover[0].url}`, // Beispielwert für cover_url
       genre: 'Action', // Beispielwert für genre
       release_date: '2024-09-02T00:00:00Z', // Beispielwert für release_date
       platform: 'PC', // Beispielwert für platform
