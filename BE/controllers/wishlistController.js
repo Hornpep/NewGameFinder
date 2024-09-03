@@ -26,6 +26,19 @@ export const createWishlist = async (req, res) => {
   }
 };
 
+//Get all Items of all Wishlists
+
+export const getAllWishlists = async (req, res) => {
+  try {
+    const wishlists = await Wishlist.findAll();
+    res.status(200).json(wishlists);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'Ein Fehler ist aufgetreten', details: error.message });
+  }
+};
+
 // Get all Wishlists for a specific user
 export const getWishlistsByUserId = async (req, res) => {
   try {

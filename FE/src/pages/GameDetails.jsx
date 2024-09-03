@@ -17,6 +17,8 @@ const Gamedetails = () => {
   }, [query]);
 
   const fetchResults = async (searchQuery) => {
+    console.log('SearchQuery:', searchQuery);
+    console.log(typeof searchQuery);
     try {
       // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
       const response = await axios.get(
@@ -122,13 +124,23 @@ const Gamedetails = () => {
                 </div>
                 <div className="flex flex-row">
                   <div className="flex flex-col  py-2">
-                    <div className="md-2 space-y-2 mb-2">
+                    <div className="md-2 space-y-2 mb-2 ">
                       <button
                         onClick={addToWishlist}
                         className="p-2 justify-center  text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex flex-col items-center "
                       >
                         <span className="text-sm">Add to</span>
                         <span className="text-lg font-bold">Wishlist</span>
+                      </button>
+                    </div>
+                    <div className="md-2 space-y-2 mb-2">
+                      <button
+                        onClick={() => window.history.back()}
+                        className="w-full p-2 justify-center items-center text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex"
+                      >
+                        <span className="text-lg font-bold items-center justify-center">
+                          Zurück
+                        </span>
                       </button>
                     </div>
                   </div>
