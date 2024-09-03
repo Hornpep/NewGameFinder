@@ -31,7 +31,7 @@ export const fetchAllGames = async (req, res) => {
   try {
     const response = await axios.post(
       'https://api.igdb.com/v4/games',
-      `fields *; 
+      `fields *; where rating > 80;
       limit 14;`,
       {
         headers: {
@@ -58,7 +58,7 @@ export const fetchUpcomingGames = async (req, res) => {
       'https://api.igdb.com/v4/release_dates/',
       `fields *; where date > ${currentTime}; 
       sort date asc;
-      limit 6;`,
+      limit 5;`,
       {
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
