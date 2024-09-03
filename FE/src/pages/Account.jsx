@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState, useContext } from 'react';
 import profileImage from '../assets/no-photo.png'; // Default Image
 import { AuthContext } from '../context';
 
 const Account = () => {
   const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    image: ''
+    image: null
   });
   const [previewImage, setPreviewImage] = useState(profileImage);
 
@@ -52,43 +52,42 @@ const Account = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result.split(',')[1];
-      setFormData((prevData) => ({
-        ...prevData,
-        image: base64String
-      }));
-      setPreviewImage(reader.result);
-    };
-    reader.readAsDataURL(file);
+    setFormData((prevData) => ({
+      ...prevData,
+      image: file
+    }));
+    setPreviewImage(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8080/auth/${userData.success.id}`, {
-        username: formData.username,
-        email: formData.email,
-        image: formData.image
-      }, {
-        withCredentials: true
+      const formDataToSend = new FormData();
+      formDataToSend.append('username', formData.username);
+      formDataToSend.append('email', formData.email);
+      if (formData.image) {
+        formDataToSend.append('image', formData.image);
+      }
+
+      await axios.put(`http://localhost:8080/auth/${userData.success.id}`, formDataToSend, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
 
-      if (response.status === 200) {
-        setUserData((prevData) => ({
-          ...prevData,
-          success: {
-            ...prevData.success,
-            username: formData.username,
-            email: formData.email,
-            image: response.data.user.image
-          }
-        }));
-        setIsEditing(false);
-      }
+      setUserData((prevData) => ({
+        ...prevData,
+        success: {
+          ...prevData.success,
+          username: formData.username,
+          email: formData.email,
+          image: previewImage
+        }
+      }));
+      setIsEditing(false);
     } catch (error) {
-      console.error('Error updating user data:', error.response ? error.response.data : error.message);
+      console.error('Error updating user data:', error);
     }
   };
 
@@ -109,22 +108,22 @@ const Account = () => {
             <div className="flex-1">
               <div className="mb-4">
                 <label className="block text-sm font-medium text-[#1CE0AF]" htmlFor="username">User:</label>
-                <input
-                  type="text"
-                  id="username"
-                  value={formData.username}
-                  onChange={handleInputChange}
+                <input 
+                  type="text" 
+                  id="username" 
+                  value={formData.username} 
+                  onChange={handleInputChange} 
                   readOnly={!isEditing}
                   className="bg-[#1C1C1C] p-2 rounded border border-[#1CE0AF] focus:outline-none focus:bg-[#2C2C2C]"
                 />
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-[#1CE0AF]" htmlFor="email">Email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
+                <input 
+                  type="email" 
+                  id="email" 
+                  value={formData.email} 
+                  onChange={handleInputChange} 
                   readOnly={!isEditing}
                   className="bg-[#1C1C1C] p-2 rounded border border-[#1CE0AF] focus:outline-none focus:bg-[#2C2C2C]"
                 />
@@ -132,9 +131,9 @@ const Account = () => {
               {isEditing && (
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-[#1CE0AF]" htmlFor="image">Profile Image:</label>
-                  <input
-                    type="file"
-                    id="image"
+                  <input 
+                    type="file" 
+                    id="image" 
                     onChange={handleImageChange}
                     className="bg-[#1C1C1C] p-2 rounded border border-[#1CE0AF]"
                   />
@@ -152,7 +151,7 @@ const Account = () => {
             </div>
 
             <div className="w-48 h-48 rounded-full overflow-hidden border-2 border-[#1CE0AF]">
-              <img src={previewImage} alt="User picture" className="w-full h-full object-cover" />
+              <img src={previewImage} alt="Profile" className="w-full h-full object-cover" />
             </div>
           </div>
         </form>

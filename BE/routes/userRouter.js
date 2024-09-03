@@ -2,6 +2,7 @@ import { Router } from "express";
 import { getUsers, getUser, createUser, updateUser, deleteUser } from "../controllers/userController.js";
 import validateJOI from "../middlewares/validateJOI.js";
 import { userSchema } from "../validations/schemas.js";
+import upload from "../utils/multer.js";
 
 export default userRouter = Router();
 
@@ -10,7 +11,9 @@ userRouter.get("/:id", verifyToken, getUser);
 userRouter.post("/signup", validateJOI(userSchema), signUp);
 userRouter.post("/login", login);
 userRouter.post("/logout", verifyToken, logout);
+userRouter.post('/create', upload.single('image'), createUser);
 userRouter.put("/:id", verifyToken, validateJOI(userSchema), updateUser);
+userRouter.put('/update/:id', upload.single('image'), updateUser);
 userRouter.delete("/:id", verifyToken, deleteUser);
 
 // userRouter.get("/", getUsers);
