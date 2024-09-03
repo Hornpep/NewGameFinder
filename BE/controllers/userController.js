@@ -2,6 +2,7 @@ import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import asyncHandler from '../utils/asyncHandler.js';
+import upload from '../utils/multer.js';
 
 export const whoAmI = async (req, res) => {
   try {
@@ -71,23 +72,26 @@ export const getUser = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-    const { username, email, password, image } = req.body;
+    const { username, email, password } = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : null; // Pfad zum hochgeladenen Bild
+  
     try {
-        if (!username || !email || !password) {
-            return res.status(400).json({ message: 'Please provide username, email and password ' });
-        }
-
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-            return res.status(409).json({ message: 'User already exists' });
-        }
-
-        const newUser = await User.create({ username, email, password, image });
-        res.status(201).json(newUser);
+      if (!username || !email || !password) {
+        return res.status(400).json({ message: 'Please provide username, email, and password.' });
+      }
+  
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+        return res.status(409).json({ message: 'User already exists' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = await User.create({ username, email, password: hashedPassword, image });
+      res.status(201).json(newUser);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+      res.status(409).json({ message: error.message });
     }
-}
+  };
 
 export const updateUser = async (req, res) => {
     const { id } = req.params;
