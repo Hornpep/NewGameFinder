@@ -41,6 +41,7 @@ const Home = () => {
         `http://localhost:8080/searchCoverById?id=${game}`
       );
       const result = response.data;
+      console.log('cover ausgabe Home:', result[0]); // Home Cover ?
       return result[0];
     } catch (error) {
       console.error("Fehler beim Abrufen der Covers:", error);
