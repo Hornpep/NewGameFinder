@@ -16,6 +16,7 @@ export const createWishlist = async (req, res) => {
       release_date: req.body.release_date,
       platform: req.body.platform,
       involved_companies: req.body.involved_companies,
+      similar_games: req.body.similar_games,
       //about: req.body.about,
     });
     console.log(wishlist);
