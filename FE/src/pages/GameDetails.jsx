@@ -69,11 +69,12 @@ const Gamedetails = () => {
       igdb_id: results[0].id, // Beispielwert für igdb_id
       name: `${results[0].name}`, // Beispielwert für name
       cover_url: `${cover[0].url}`, // Beispielwert für cover_url
-      genre: 'Action', // Beispielwert für genre
+      genre: results[0].genres, // Beispielwert für genre
       release_date: '2024-09-02T00:00:00Z', // Beispielwert für release_date
-      platform: 'PC', // Beispielwert für platform
-      involved_companies: 'Company Name', // Beispielwert für involved_companies
-      about: 'This is an amazing game.', // Beispielwert für about
+      platform: results[0].platforms, // Beispielwert für platform
+      involved_companies: [3], // Beispielwert für involved_companies
+      similar_games: results[0].genres,
+      //about: `${results[0].summary}`, // Beispielwert für about
     };
 
     try {
