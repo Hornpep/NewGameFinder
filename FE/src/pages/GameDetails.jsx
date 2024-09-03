@@ -4,63 +4,40 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Gamedetails = () => {
+const GameDetails = () => {
   const [results, setResults] = useState([]);
   const [cover, setCover] = useState([]);
   const location = useLocation();
-  const query = new URLSearchParams(location.search).get('id'); // Extrahiert die Suchanfrage
-
-  //console.log(query);
+  const query = new URLSearchParams(location.search).get('id');
 
   useEffect(() => {
     if (query) {
-      fetchResults(query); // Ruft die Ergebnisse für die aktuelle Suchanfrage ab
+      fetchResults(query);
     }
   }, [query]);
 
   const fetchResults = async (searchQuery) => {
-    console.log('SearchQuery:', searchQuery);
-    console.log(typeof searchQuery);
     try {
-      // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
-      const response = await axios.get(
-        `http://localhost:8080/searchGameById?id=${searchQuery}`
-      );
-      const result = response.data;
-
-      // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
-      setResults(result);
-
-      //console.log(result);
-
-      fetchCover(result[0].id); // Cover Bild abrufen
+      const response = await axios.get(`http://localhost:8080/searchGameById?id=${searchQuery}`);
+      setResults(response.data);
+      if (response.data[0]) fetchCover(response.data[0].id);
     } catch (error) {
-      console.error('Fehler beim Abrufen der Suchergebnisse:', error);
-      // Optional: Fehlerbehandlung anzeigen
+      console.error('Error fetching search results:', error);
     }
   };
 
-  const fetchCover = async (searchQuery) => {
+  const fetchCover = async (gameId) => {
+    if (!gameId) return;
     try {
-      //console.log('test');
-      // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
-      const response = await axios.get(
-        `http://localhost:8080/searchCoverById?id=${searchQuery}`
-      );
-      const result = response.data;
-      //console.log('ResultCover:', result);
-      // Setze die erhaltenen Ergebnisse (in deinem Frontend-State-Management, z.B. setState, useState)
-      setCover(result);
+      const response = await axios.get(`http://localhost:8080/searchCoverById?id=${gameId}`);
+      setCover(response.data);
     } catch (error) {
-      console.error('Fehler beim Abrufen der Suchergebnisse:', error);
-      // Optional: Fehlerbehandlung anzeigen
+      console.error('Error fetching cover:', error);
     }
   };
 
   const addToWishlist = async () => {
-    console.log('result 0 gamedetails:', results[0]);
     // Daten, die an den Server gesendet werden sollen
-
     const wishlistData = {
       users_id: 15,
       igdb_id: results[0].id, // Beispielwert für igdb_id
@@ -85,111 +62,59 @@ const Gamedetails = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Fehler beim Hinzufügen zur Wishlist');
+        throw new Error('Error adding game to wishlist');
       }
 
-      toast.success('Zur Wishlist hinzugefügt');
+      toast.success('Added to wishlist successfully!');
     } catch (error) {
       alert(`Fehler: ${error.message}`);
     }
   };
 
-  /*   if (cover.length < 1)
+  if (!results.length || !cover.length) {
     return (
-      <div className="p-28">
-        <p>Loading...</p>
+      <div className="flex items-center justify-center min-h-screen bg-[#141414] text-white">
+        <div className="text-lg font-bold">Loading game details...</div>
       </div>
-    ); */
+    );
+  }
+
+  const game = results[0];
+  const gameCover = cover[0]?.url || 'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg';
 
   return (
-    <div className="flex min-h-screen bg-[#141414] justify-center ">
-      <ToastContainer />
-      <div className="flex h-full  bg-[#141414]  p-28 w-1/2 justify-center">
-        <div className="flex  rounded-md justify-center text-center">
+    <div className="bg-[#141414] min-h-screen p-28 text-white">
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-5xl font-bold mb-4">{game.name}</h1>
+          <img src={gameCover} alt={game.name} className="mx-auto w-full max-w-lg rounded-lg shadow-lg"/>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <button
+            onClick={addToWishlist}
+            className="bg-[#1CE0AF] text-black px-4 py-2 rounded-md shadow hover:bg-[#17a2b8]"
+          >
+            Add to Wishlist
+          </button>
+          <button
+            onClick={() => window.history.back()}
+            className="bg-gray-600 text-white px-4 py-2 rounded-md shadow hover:bg-gray-500"
+          >
+            Back
+          </button>
           <div>
-            {results[0]?.name && cover[0]?.url ? (
-              <div className="flex border p-2 border-[#1DD0E0] flex-col">
-                <h2 className=" text-center py-2 border border-[#1DD0E0] rounded-md text-white font-extrabold text-3xl">
-                  {results[0].name}
-                </h2>
-                <div className="w-full items-center justify-center flex flex-col  py-2">
-                  <img
-                    className=" w-1/2  rounded-md  border-black  border-2"
-                    src={cover[0].url}
-                  ></img>
-                </div>
-                <div className="flex flex-row">
-                  <div className="flex flex-col  py-2">
-                    <div className="md-2 space-y-2 mb-2 ">
-                      <button
-                        onClick={addToWishlist}
-                        className="p-2 justify-center  text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex flex-col items-center "
-                      >
-                        <span className="text-sm">Add to</span>
-                        <span className="text-lg font-bold">Wishlist</span>
-                      </button>
-                    </div>
-                    <div className="md-2 space-y-2 mb-2">
-                      <button
-                        onClick={() => window.history.back()}
-                        className="w-full p-2 justify-center items-center text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex"
-                      >
-                        <span className="text-lg font-bold items-center justify-center">
-                          Back
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex flex-row p-2  justify-center">
-                      <p className="text-white border w-full text-xl rounded-md border-[#1CE0AF]">
-                        {results[0].summary}
-                      </p>
-                    </div>
-                    <div className="flex flex-row p-2   justify-center">
-                      <div className="flex flex-col p-2 gap-y-2 w-full">
-                        <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Genre: Strategie
-                        </p>
-                        <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Release Date: 20.02.2000
-                        </p>
-                        <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Developer: Suno Tec Studio
-                        </p>
-                        <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Publisher: Sony
-                        </p>
-                      </div>
-                      <div className="flex flex-col p-2 gap-y-2 w-full">
-                        <p className="text-white border rounded-md  border-[#1CE0AF]">
-                          Rating: {Math.round(results[0].rating) / 10} /10
-                        </p>
-                        <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          IGDB Id: {results[0].id}
-                        </p>
-                        <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Age Rating: USK 12
-                        </p>
-                        <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Languages: German
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center min-h-screen bg-[#141414]">
-                <div className="relative w-24 h-24 animate-spin">
-                  <div className="absolute inset-0 border-4 border-t-transparent border-white rounded-full animate-[spin_1s_linear_infinite]"></div>
-                  <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
-                </div>
-                <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
-                  NextGameFinder lädt...
-                </span>
-              </div>
-            )}
+            <h2 className="text-3xl font-semibold mb-3">Game Details</h2>
+            <p>{game.summary || 'No description available.'}</p>
+          </div>
+          <div>
+            <h2 className="text-3xl font-semibold mb-3">Game Information</h2>
+            <ul>
+              <li>Genre: {game.genres?.join(', ') || 'N/A'}</li>
+              <li>Release Date: {game.release_date ? new Date(game.release_date).toLocaleDateString() : 'N/A'}</li>
+              <li>Rating: {game.rating ? `${(game.rating / 10).toFixed(1)}/10` : 'N/A'}</li>
+              <li>Platform: {game.platforms?.join(', ') || 'N/A'}</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -197,4 +122,4 @@ const Gamedetails = () => {
   );
 };
 
-export default Gamedetails;
+export default GameDetails;
