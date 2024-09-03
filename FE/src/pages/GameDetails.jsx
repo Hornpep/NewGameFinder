@@ -61,14 +61,14 @@ const Gamedetails = () => {
   };
 
   const addToWishlist = async () => {
-    console.log('result id:', results[0].id);
+    console.log('result 0 gamedetails:', results[0]);
     // Daten, die an den Server gesendet werden sollen
 
     const wishlistData = {
       users_id: 15,
-      igdb_id: 33, // Beispielwert für igdb_id
-      name: 'Game Title', // Beispielwert für name
-      cover_url: 'https://example.com/cover.jpg', // Beispielwert für cover_url
+      igdb_id: results[0].id, // Beispielwert für igdb_id
+      name: `${results[0].name}`, // Beispielwert für name
+      cover_url: `${cover[0].url}`, // Beispielwert für cover_url
       genre: 'Action', // Beispielwert für genre
       release_date: '2024-09-02T00:00:00Z', // Beispielwert für release_date
       platform: 'PC', // Beispielwert für platform

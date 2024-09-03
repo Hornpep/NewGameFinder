@@ -22,7 +22,7 @@ const Wishlist = sequelize.define(
       allowNull: false,
     },
     genre: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: false,
     },
     release_date: {
@@ -30,11 +30,11 @@ const Wishlist = sequelize.define(
       allowNull: false,
     },
     platform: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: false,
     },
     involved_companies: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: false,
     },
     users_id: {
@@ -44,6 +44,10 @@ const Wishlist = sequelize.define(
         model: 'Users', // Name der referenzierten Tabelle
         key: 'id', // Name der referenzierten Spalte in der Users-Tabelle
       },
+    },
+    similar_games: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: false,
     },
     /*     about: {
       type: DataTypes.TEXT,

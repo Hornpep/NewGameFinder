@@ -69,12 +69,12 @@ export const fetchUpcomingGames = async (req, res) => {
     const upcomingGames = response.data;
 
     // Schritt 2: Extrahiere die "game" IDs
-    const gameIds = upcomingGames.map(game => game.game);
+    const gameIds = upcomingGames.map((game) => game.game);
     if (gameIds.length === 0) {
       return res.status(404).json({ error: 'No upcoming games found' });
     }
     console.log('Extracted Game IDs:', gameIds);
-    
+
     // Schritt 3: Hole die Spieldetails anhand der extrahierten IDs
     const gamesResponse = await axios.post(
       'https://api.igdb.com/v4/games/',
