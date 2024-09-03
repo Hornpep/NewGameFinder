@@ -4,14 +4,14 @@ import profileImage from '../assets/no-photo.png'; // Default Image
 import { AuthContext } from '../context';
 
 const Account = () => {
-  const { user } = useContext(AuthContext); // Use AuthContext to get user info
-  const [userData, setUserData] = useState(null); // State to store fetched user data
-  const [loading, setLoading] = useState(true); // State to handle loading state
+  const { user } = useContext(AuthContext);
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/users/whoami', { withCredentials: true });
+        const response = await axios.get('http://localhost:8080/auth/whoami', { withCredentials: true });
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
