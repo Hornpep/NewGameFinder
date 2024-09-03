@@ -190,7 +190,7 @@ const Account = () => {
             </div>
             <div className="flex-1 flex justify-center items-center">
               <div className="w-48 h-48 rounded-full overflow-hidden border-2 border-[#1CE0AF]">
-                <img src={previewImage} alt="User profile" className="w-full h-full object-cover rounded-full" />
+                <img src={userData.image || profileImage} alt="User profile" className="w-full h-full object-cover rounded-full" />
               </div>
             </div>
           </div>

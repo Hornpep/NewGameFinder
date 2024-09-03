@@ -7,7 +7,7 @@ const User = sequelize.define('User', {
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
     password: { type: DataTypes.STRING, allowNull: false },
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-    image: { type: DataTypes.STRING, defaultValue: 'no-photo.jpg' },
+    image: { type: DataTypes.STRING, defaultValue: 'no-photo.png' },
     preferences: { type: DataTypes.STRING },
     wishlist: { type: DataTypes.STRING },
 });
