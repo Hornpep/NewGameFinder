@@ -22,6 +22,7 @@ import {
   updateGame,
   deleteGame,
 } from './controllers/wishlistController.js';
+import { getUser } from './controllers/userController.js';
 
 const app = express();
 app.use(express.json());
@@ -40,8 +41,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.get('/users/:id', getUser);
 // app.post('/users', userController.createUser);
-// app.get('/users/:id', userController.getUserById);
 // app.put('/users/:id', userController.updateUser);
 // app.delete('/users/:id', userController.deleteUser);
 
@@ -70,7 +71,7 @@ app.use((req, res, next) => {
 // Synchronisiere die Modelle mit der Datenbank und starte den Server
 sequelize
   .sync() // Dies aktualisiert die Datenbankstruktur basierend auf den Modellen
-  /*   { alter: true } */
+  // .sync({ alter: true }) // Dies aktualisiert die Datenbankstruktur basierend auf den Modellen
   .then(() => {
     console.log('All models were synchronized successfully.');
     app.listen(PORT, () => {
