@@ -53,10 +53,10 @@ und dann unter "Protected routes" das auskommentierte der Route entfernen. */}
               path="/Wishlist"
               element={<Wishlist />}
             />
-            <Route
+            {/* <Route
               path="/Account"
               element={<Account />}
-            />
+            /> */}
 
           {/* Protected routes */}
           <Route element={<ProtectedLayout />}>
@@ -69,10 +69,10 @@ und dann unter "Protected routes" das auskommentierte der Route entfernen. */}
               path="/Wishlist"
               element={<Wishlist />}
             /> */}
-            {/* <Route
+            <Route
               path="/Account"
               element={<Account />}
-            /> */}
+            />
             
           </Route>
         </Routes>
