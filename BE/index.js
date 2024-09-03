@@ -21,6 +21,7 @@ import {
   deleteWishlist,
   updateGame,
   deleteGame,
+  getAllWishlists,
 } from './controllers/wishlistController.js';
 import { getUser } from './controllers/userController.js';
 
@@ -60,6 +61,7 @@ app.get('/searchCoverByID', fetchCoverById); // Abruf Cover für DetailPage
 app.get('/upcoming-games', fetchUpcomingGames);
 
 app.post('/wishlists', createWishlist);
+app.get('/wishlists', getAllWishlists);
 app.get('/users/:userId/wishlists', getWishlistsByUserId);
 app.delete('/wishlists/:id', deleteWishlist);
 

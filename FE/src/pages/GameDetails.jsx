@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Gamedetails = () => {
   const [results, setResults] = useState([]);
@@ -17,6 +19,8 @@ const Gamedetails = () => {
   }, [query]);
 
   const fetchResults = async (searchQuery) => {
+    console.log('SearchQuery:', searchQuery);
+    console.log(typeof searchQuery);
     try {
       // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
       const response = await axios.get(
@@ -35,13 +39,6 @@ const Gamedetails = () => {
       // Optional: Fehlerbehandlung anzeigen
     }
   };
-
-  /*   if (results.length > 1)
-    return (
-      <div className="p-28">
-        <p className="text-red-600 bold text-6xl">Loading...</p>
-      </div>
-    ); */
 
   const fetchCover = async (searchQuery) => {
     try {
@@ -91,7 +88,7 @@ const Gamedetails = () => {
         throw new Error('Fehler beim Hinzufügen zur Wishlist');
       }
 
-      alert('Zur Wishlist hinzugefügt');
+      toast.success('Zur Wishlist hinzugefügt');
     } catch (error) {
       alert(`Fehler: ${error.message}`);
     }
@@ -106,6 +103,7 @@ const Gamedetails = () => {
 
   return (
     <div className="flex min-h-screen bg-[#141414] justify-center ">
+      <ToastContainer />
       <div className="flex h-full  bg-[#141414]  p-28 w-1/2 justify-center">
         <div className="flex  rounded-md justify-center text-center">
           <div>
@@ -122,13 +120,23 @@ const Gamedetails = () => {
                 </div>
                 <div className="flex flex-row">
                   <div className="flex flex-col  py-2">
-                    <div className="md-2 space-y-2 mb-2">
+                    <div className="md-2 space-y-2 mb-2 ">
                       <button
                         onClick={addToWishlist}
                         className="p-2 justify-center  text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex flex-col items-center "
                       >
                         <span className="text-sm">Add to</span>
                         <span className="text-lg font-bold">Wishlist</span>
+                      </button>
+                    </div>
+                    <div className="md-2 space-y-2 mb-2">
+                      <button
+                        onClick={() => window.history.back()}
+                        className="w-full p-2 justify-center items-center text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex"
+                      >
+                        <span className="text-lg font-bold items-center justify-center">
+                          Back
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -164,7 +172,7 @@ const Gamedetails = () => {
                           Age Rating: USK 12
                         </p>
                         <p className="text-white border  rounded-md border-[#1CE0AF]">
-                          Languages: Deutsch
+                          Languages: German
                         </p>
                       </div>
                     </div>

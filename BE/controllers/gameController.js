@@ -54,6 +54,7 @@ export const fetchUpcomingGames = async (req, res) => {
   try {
     // Schritt 1: Hole die kommenden Spiele anhand der Veröffentlichungsdaten
     const currentTime = Math.floor(Date.now() / 1000);
+    //console.log(currentTime);
     const response = await axios.post(
       'https://api.igdb.com/v4/release_dates/',
       `fields *; where date > ${currentTime}; 
@@ -73,7 +74,7 @@ export const fetchUpcomingGames = async (req, res) => {
     if (gameIds.length === 0) {
       return res.status(404).json({ error: 'No upcoming games found' });
     }
-    console.log('Extracted Game IDs:', gameIds);
+    //console.log('Extracted Game IDs:', gameIds);
 
     // Schritt 3: Hole die Spieldetails anhand der extrahierten IDs
     const gamesResponse = await axios.post(
