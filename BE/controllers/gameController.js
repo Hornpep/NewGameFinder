@@ -52,10 +52,13 @@ export const fetchAllGames = async (req, res) => {
 
 export const fetchUpcomingGames = async (req, res) => {
   try {
+    // Schritt 1: Hole die kommenden Spiele anhand der Veröffentlichungsdaten
     const currentTime = Math.floor(Date.now() / 1000);
     const response = await axios.post(
       'https://api.igdb.com/v4/release_dates/',
-      `fields *; where game.platforms = 48 & date > ${currentTime}; sort date asc;`,
+      `fields *; where date > ${currentTime}; 
+      sort date asc;
+      limit 6;`,
       {
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
@@ -65,7 +68,29 @@ export const fetchUpcomingGames = async (req, res) => {
     );
     const upcomingGames = response.data;
 
-    res.json(upcomingGames);
+    // Schritt 2: Extrahiere die "game" IDs
+    const gameIds = upcomingGames.map(game => game.game);
+    if (gameIds.length === 0) {
+      return res.status(404).json({ error: 'No upcoming games found' });
+    }
+    console.log('Extracted Game IDs:', gameIds);
+    
+    // Schritt 3: Hole die Spieldetails anhand der extrahierten IDs
+    const gamesResponse = await axios.post(
+      'https://api.igdb.com/v4/games/',
+      `fields *; where id = (${gameIds.join(',')});`,
+      {
+        headers: {
+          'Client-ID': process.env.IGDB_CLIENT_ID,
+          Authorization: `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
+        },
+      }
+    );
+
+    const gameDetails = gamesResponse.data;
+
+    // Schritt 4: Sende die detaillierten Spieldaten zurück an den Client
+    res.json(gameDetails);
   } catch (error) {
     res
       .status(500)
