@@ -4,11 +4,17 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const GameDetails = () => {
   const [results, setResults] = useState([]);
   const [cover, setCover] = useState([]);
   const location = useLocation();
   const query = new URLSearchParams(location.search).get('id');
+  const [gameIds, setGameIds] = useState([]);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (query) {
@@ -16,12 +22,37 @@ const GameDetails = () => {
     }
   }, [query]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/wishlists');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        //console.log('Result Recommendations:', result);
+        const gameIdsWish = result.map((item) => item.igdb_id);
+
+        console.log('gameIdsWish gameditails:', gameIdsWish);
+        setGameIds(gameIdsWish);
+        setData(result);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const fetchResults = async (searchQuery) => {
     try {
       const response = await axios.get(
         `http://localhost:8080/searchGameById?id=${searchQuery}`
       );
       setResults(response.data);
+
       if (response.data[0]) fetchCover(response.data[0].id);
     } catch (error) {
       console.error('Error fetching search results:', error);
@@ -41,6 +72,12 @@ const GameDetails = () => {
   };
 
   const addToWishlist = async () => {
+    if (gameIds.includes(results[0].id)) {
+      console.log('test', results[0].id);
+      toast.info('Already in Wishlist');
+      await sleep(1500);
+      return window.location.reload();
+    }
     // Daten, die an den Server gesendet werden sollen
     const wishlistData = {
       users_id: 15,
