@@ -78,7 +78,7 @@ const Wishlist = () => {
             <h2 className="text-5xl font-bold mb-4 text-primary-500">
               Your wishlist
             </h2>
-            <p className="text-xl font-white">
+            <p className="text-xl text-white">
               Your favorite games are just a click away!
             </p>
           </div>
