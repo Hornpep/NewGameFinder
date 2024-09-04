@@ -105,7 +105,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-5xl font-bold mb-4">Nextgamefinder</h1>
-          <p className="text-xl font-white">Find your next game to play</p>
+          <p className="text-xl text-white">Find your next game to play</p>
           <button
             onClick={scrollToComingSoon}
             className="mt-4 px-8 py-3 bg-[#1CE0AF] text-black font-bold rounded-lg"
@@ -125,7 +125,7 @@ const Home = () => {
             <h2 className="text-5xl font-bold mb-4 text-primary-500">
               Coming Soon
             </h2>
-            <p className="text-xl font-white">
+            <p className="text-xl text-white">
               Upcoming games you don't want to miss
             </p>
           </div>
@@ -178,7 +178,7 @@ const Home = () => {
             <h2 className="text-5xl font-bold mb-4 text-primary-500">
               Game Library
             </h2>
-            <p className="text-xl font-white">
+            <p className="text-xl text-white">
               Explore the best games from our collection
             </p>
           </div>
