@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Recommendations = () => {
   const [data, setData] = useState([]);
@@ -104,7 +106,7 @@ const Recommendations = () => {
         throw new Error('Fehler beim Hinzufügen zur Wishlist');
       }
 
-      toast.success('Zur Wishlist hinzugefügt');
+      toast.success('Added to Wishlist');
     } catch (error) {
       alert(`Fehler: ${error.message}`);
     }
@@ -194,7 +196,7 @@ const Recommendations = () => {
                   <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
                 </div>
                 <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
-                  NextGameFinder lädt...
+                  NextGameFinder is loading...
                 </span>
               </div>
             )}
