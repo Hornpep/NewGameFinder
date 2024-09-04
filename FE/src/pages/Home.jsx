@@ -118,7 +118,7 @@ const Home = () => {
       {/* Upcoming Games Section */}
       <div
         ref={comingSoonRef}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-14 px-28 py-20"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-14 px-28 pt-20"
       >
         <div className="relative h-[30vh] w-full flex items-center justify-center bg-cover bg-center">
           <div className="relative z-10 text-center px-4">
