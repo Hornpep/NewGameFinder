@@ -119,100 +119,32 @@ const Recommendations = () => {
   }
 
   return (
-    <>
-      <ToastContainer />
-      <div className="flex min-h-screen bg-[#141414] justify-center ">
-        <div className="flex h-full  bg-[#141414]  p-28 w-1/2 justify-center">
-          <div className="flex  rounded-md justify-center text-center">
-            <div>
-              {results[0]?.name && cover[0]?.url ? (
-                <div className="flex border p-2 border-[#1DD0E0] flex-col">
-                  <h2 className=" text-center py-2 border border-[#1DD0E0] rounded-md text-white font-extrabold text-3xl">
-                    {results[0].name}
-                  </h2>
-                  <div className="w-full items-center justify-center flex flex-col  py-2">
-                    <img
-                      className=" w-1/2  rounded-md  border-black  border-2"
-                      src={cover[0].url}
-                    ></img>
-                  </div>
-                  <div className="flex flex-row">
-                    <div className="flex flex-col  py-2">
-                      <div className="md-2 space-y-2 mb-2 ">
-                        <button
-                          onClick={addToWishlist}
-                          className="p-2 justify-center  text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex flex-col items-center "
-                        >
-                          <span className="text-sm">Add to</span>
-                          <span className="text-lg font-bold">Wishlist</span>
-                        </button>
-                      </div>
-                      <div className="md-2 space-y-2 mb-2">
-                        <button
-                          onClick={() => window.history.back()}
-                          className="w-full p-2 justify-center items-center text-white border bg-[#141414] rounded-md border-[#1CE0AF] flex"
-                        >
-                          <span className="text-lg font-bold items-center justify-center">
-                            Back
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex flex-row p-2  justify-center">
-                        <p className="text-white border w-full text-xl rounded-md border-[#1CE0AF]">
-                          {results[0].summary}
-                        </p>
-                      </div>
-                      <div className="flex flex-row p-2   justify-center">
-                        <div className="flex flex-col p-2 gap-y-2 w-full">
-                          <p className="text-white border rounded-md  border-[#1CE0AF]">
-                            Genre: Strategie
-                          </p>
-                          <p className="text-white border  rounded-md border-[#1CE0AF]">
-                            Release Date: 20.02.2000
-                          </p>
-                          <p className="text-white border rounded-md  border-[#1CE0AF]">
-                            Developer: Suno Tec Studio
-                          </p>
-                          <p className="text-white border rounded-md  border-[#1CE0AF]">
-                            Publisher: Sony
-                          </p>
-                        </div>
-                        <div className="flex flex-col p-2 gap-y-2 w-full">
-                          <p className="text-white border rounded-md  border-[#1CE0AF]">
-                            Rating: {Math.round(results[0].rating) / 10} /10
-                          </p>
-                          <p className="text-white border  rounded-md border-[#1CE0AF]">
-                            IGDB Id: {results[0].id}
-                          </p>
-                          <p className="text-white border  rounded-md border-[#1CE0AF]">
-                            Age Rating: USK 12
-                          </p>
-                          <p className="text-white border  rounded-md border-[#1CE0AF]">
-                            Languages: German
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center min-h-screen bg-[#141414]">
-                  <div className="relative w-24 h-24 animate-spin">
-                    <div className="absolute inset-0 border-4 border-t-transparent border-white rounded-full animate-[spin_1s_linear_infinite]"></div>
-                    <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
-                  </div>
-                  <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
-                    NextGameFinder is loading...
-                  </span>
-                </div>
-              )}
+    <div className="bg-[#141414] min-h-screen p-28 text-white">
+    <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+    <div className="max-w-4xl mx-auto">
+            {results[0] && cover[0] ? (
+          <div className="text-center mb-10">
+            <h1 className="text-5xl font-bold mb-8">{results[0].name}</h1>
+            <img src={cover[0].url} alt={results[0].name} className="mx-auto w-full max-w-md rounded-lg shadow-lg"/>
+            <p className="mt-8">{results[0].summary || 'No description available.'}</p>
+            <div className="mt-8">
+              <button onClick={addToWishlist} className="bg-[#1CE0AF] text-black px-4 py-2 rounded-md shadow hover:bg-[#17a2b8]">Add to Wishlist</button>
             </div>
           </div>
+        ) : (
+          <div className="flex items-center justify-center min-h-screen bg-[#141414]">
+          <div className="relative w-24 h-24 animate-spin">
+            <div className="absolute inset-0 border-4 border-t-transparent border-white rounded-full animate-[spin_1s_linear_infinite]"></div>
+            <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
+          </div>
+          <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
+            NextGameFinder is loading...
+          </span>
         </div>
-      </div>
-    </>
+        )}
+            </div>
+          </div>
+        
   );
 };
 
