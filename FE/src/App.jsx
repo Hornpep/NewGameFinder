@@ -19,60 +19,24 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          />
-
-          <Route
-            path="/SearchResults"
-            element={<SearchResults />}
-          />
-          <Route
-            path="/Login"
-            element={<Login />}
-          />
-          <Route
-            path="/Signup"
-            element={<Signup />}
-          />
-          <Route
-            path="/Gamedetails"
-            element={<Gamedetails />}
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/SearchResults" element={<SearchResults />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/Gamedetails" element={<Gamedetails />} />
           
 {/* Wenn die Rout gesperrt werden soll: Zuerst unter "Still unprotected routes" die jeweilige Route auskommentieren 
 und dann unter "Protected routes" das auskommentierte der Route entfernen. */}
+        {/* Still unprotected routes */}
+          <Route path="/Recommendations" element={<Recommendations />} />
+          <Route path="/Wishlist" element={<Wishlist />} />
+          {/* <Route path="/Account" element={<Account />} /> */}
 
-{/* Still unprotected routes */}
-            <Route
-              path="/Recommendations"
-              element={<Recommendations />}
-            />
-            <Route
-              path="/Wishlist"
-              element={<Wishlist />}
-            />
-            {/* <Route
-              path="/Account"
-              element={<Account />}
-            /> */}
-
-          {/* Protected routes */}
+        {/* Protected routes */}
           <Route element={<ProtectedLayout />}>
-
-            {/* <Route
-              path="/Recommendations"
-              element={<Recommendations />}
-            /> */}
-            {/* <Route
-              path="/Wishlist"
-              element={<Wishlist />}
-            /> */}
-            <Route
-              path="/Account"
-              element={<Account />}
-            />
+            {/* <Route path="/Recommendations" element={<Recommendations />} /> */}
+            {/* <Route path="/Wishlist" element={<Wishlist />} /> */}
+            <Route path="/Account" element={<Account />} />
             
           </Route>
         </Routes>

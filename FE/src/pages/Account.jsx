@@ -22,6 +22,14 @@ const Account = () => {
       try {
         const response = await axios.get('http://localhost:8080/auth/whoami', { withCredentials: true });
         setUserData(response.data);
+
+        const dbImage = response.data.success.image;
+        if (dbImage === 'no-photo.png' || dbImage === 'no-photo.jpg' || !dbImage) {
+          setPreviewImage(profileImage);
+        } else {
+          setPreviewImage(dbImage);
+        }
+
         setFormData({
           username: response.data.success.username,
           email: response.data.success.email,
@@ -29,7 +37,6 @@ const Account = () => {
           confirmPassword: '',
           image: response.data.success.image,
         });
-        setPreviewImage(response.data.success.image || profileImage);
       } catch (error) {
         console.error('Error fetching user data:', error);
       } finally {
@@ -60,7 +67,7 @@ const Account = () => {
       ...prevData,
       image: file,
     }));
-    setPreviewImage(URL.createObjectURL(file));
+    setPreviewImage(file ? URL.createObjectURL(file) : profileImage);
   };
 
   const handleSubmit = async (e) => {
@@ -95,7 +102,7 @@ const Account = () => {
           ...prevData.success,
           username: formData.username,
           email: formData.email,
-          image: previewImage,
+          image: formData.image ? URL.createObjectURL(formData.image) : prevData.success.image,
         },
       }));
       setIsEditing(false);
@@ -190,7 +197,7 @@ const Account = () => {
             </div>
             <div className="flex-1 flex justify-center items-center">
               <div className="w-48 h-48 rounded-full overflow-hidden border-2 border-[#1CE0AF]">
-                <img src={userData.image || profileImage} alt="User profile" className="w-full h-full object-cover rounded-full" />
+                <img src={previewImage} alt="User profile" className="w-full h-full object-cover rounded-full" />
               </div>
             </div>
           </div>
