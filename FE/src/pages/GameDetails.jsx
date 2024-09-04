@@ -18,7 +18,9 @@ const GameDetails = () => {
 
   const fetchResults = async (searchQuery) => {
     try {
-      const response = await axios.get(`http://localhost:8080/searchGameById?id=${searchQuery}`);
+      const response = await axios.get(
+        `http://localhost:8080/searchGameById?id=${searchQuery}`
+      );
       setResults(response.data);
       if (response.data[0]) fetchCover(response.data[0].id);
     } catch (error) {
@@ -29,7 +31,9 @@ const GameDetails = () => {
   const fetchCover = async (gameId) => {
     if (!gameId) return;
     try {
-      const response = await axios.get(`http://localhost:8080/searchCoverById?id=${gameId}`);
+      const response = await axios.get(
+        `http://localhost:8080/searchCoverById?id=${gameId}`
+      );
       setCover(response.data);
     } catch (error) {
       console.error('Error fetching cover:', error);
@@ -80,18 +84,34 @@ const GameDetails = () => {
   }
 
   const game = results[0];
-  const gameCover = cover[0]?.url || 'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg';
+  const gameCover =
+    cover[0]?.url ||
+    'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg';
 
   return (
     <div className="bg-[#141414] min-h-screen p-28 text-white">
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-5xl font-bold mb-4">{game.name}</h1>
-          <img src={gameCover} alt={game.name} className="mx-auto w-full max-w-lg rounded-lg shadow-lg"/>
+          <img
+            src={gameCover}
+            alt={game.name}
+            className="mx-auto w-full max-w-lg rounded-lg shadow-lg"
+          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <button
+          <button
             onClick={addToWishlist}
             className="bg-[#1CE0AF] text-black px-4 py-2 rounded-md shadow hover:bg-[#17a2b8]"
           >
@@ -111,8 +131,16 @@ const GameDetails = () => {
             <h2 className="text-3xl font-semibold mb-3">Game Information</h2>
             <ul>
               <li>Genre: {game.genres?.join(', ') || 'N/A'}</li>
-              <li>Release Date: {game.release_date ? new Date(game.release_date).toLocaleDateString() : 'N/A'}</li>
-              <li>Rating: {game.rating ? `${(game.rating / 10).toFixed(1)}/10` : 'N/A'}</li>
+              <li>
+                Release Date:{' '}
+                {game.release_date
+                  ? new Date(game.release_date).toLocaleDateString()
+                  : 'N/A'}
+              </li>
+              <li>
+                Rating:{' '}
+                {game.rating ? `${(game.rating / 10).toFixed(1)}/10` : 'N/A'}
+              </li>
               <li>Platform: {game.platforms?.join(', ') || 'N/A'}</li>
             </ul>
           </div>
