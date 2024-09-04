@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Recommendations = () => {
   const [data, setData] = useState([]);
@@ -10,20 +12,18 @@ const Recommendations = () => {
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
 
-  // Daten aus der Wunschliste abrufen
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:8080/wishlists');
         if (!response.ok) {
-          throw new Error('Netzwerkantwort war nicht ok');
+          throw new Error('Network response was not ok');
         }
         const result = await response.json();
-        setData(result); // Daten aus dem Backend setzen
-        //console.log('data:', data);
+        setData(result);
         setLoading(false);
       } catch (error) {
-        setError(error);
+        setError(error.message);
         setLoading(false);
       }
     };
@@ -31,43 +31,12 @@ const Recommendations = () => {
     fetchData();
   }, []);
 
-  // Funktion zum Abrufen eines zufälligen Spiels und seiner Daten
   useEffect(() => {
     if (data.length > 0) {
       const randomGame = () => {
         const randomIndex = Math.floor(Math.random() * data.length);
         const randomSimilarGame = data[randomIndex].similar_games[0];
         const idString = randomSimilarGame.toString();
-
-        // Suchergebnisse abrufen
-        const fetchResults = async (id) => {
-          try {
-            const response = await axios.get(
-              `http://localhost:8080/searchGameById?id=${id}`
-            );
-            const result = response.data;
-            setResults(result);
-            console.log('Result:', result);
-            fetchCover(result[0].id); // Cover Bild abrufen
-          } catch (error) {
-            console.error('Fehler beim Abrufen der Suchergebnisse:', error);
-          }
-        };
-
-        // Cover Bild abrufen
-        const fetchCover = async (id) => {
-          try {
-            const response = await axios.get(
-              `http://localhost:8080/searchCoverById?id=${id}`
-            );
-            const result = response.data;
-            console.log('result cover:', result);
-            setCover(result);
-          } catch (error) {
-            console.error('Fehler beim Abrufen der Coverdaten:', error);
-          }
-        };
-
         fetchResults(idString);
       };
 
@@ -75,10 +44,34 @@ const Recommendations = () => {
     }
   }, [data]);
 
-  const addToWishlist = async () => {
-    console.log('result 0 gamedetails:', results[0]);
-    // Daten, die an den Server gesendet werden sollen
+  const fetchResults = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/searchGameById?id=${id}`
+      );
+      const result = response.data;
+      setResults(result);
+      if (result.length > 0) {
+        fetchCover(result[0].id);
+      }
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  };
 
+  const fetchCover = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/searchCoverById?id=${id}`
+      );
+      setCover(response.data);
+    } catch (error) {
+      console.error('Error fetching cover:', error);
+    }
+  };
+
+  const addToWishlist = async () => {
+    // Daten, die an den Server gesendet werden sollen
     const wishlistData = {
       users_id: 15,
       igdb_id: results[0].id, // Beispielwert für igdb_id
@@ -93,24 +86,39 @@ const Recommendations = () => {
     };
 
     try {
-      // Fetch-Aufruf zur Übergabe der Daten an den Server
       const response = await fetch('http://localhost:8080/wishlists', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(wishlistData), // Daten in JSON-Format umwandeln
+        body: JSON.stringify(wishlistData),
       });
 
       if (!response.ok) {
-        throw new Error('Fehler beim Hinzufügen zur Wishlist');
+        throw new Error('Error adding game to wishlist');
       }
 
       toast.success('Added to Wishlist');
     } catch (error) {
-      alert(`Fehler: ${error.message}`);
+      toast.error(`Error: ${error.message}`);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#141414] text-white">
+        <div className="text-lg font-bold">Loading recommendations...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#141414] text-white">
+        <div className="text-lg font-bold">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <>
