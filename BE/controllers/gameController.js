@@ -59,7 +59,7 @@ export const fetchUpcomingGames = async (req, res) => {
       'https://api.igdb.com/v4/release_dates/',
       `fields *; where date > ${currentTime}; 
       sort date asc;
-      limit 5;`,
+      limit 4;`,
       {
         headers: {
           'Client-ID': process.env.IGDB_CLIENT_ID,
