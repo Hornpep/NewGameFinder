@@ -56,7 +56,7 @@ const Wishlist = () => {
         `http://localhost:8080/wishlists/${searchQuery}`
       );
       const result = response.data;
-      console.log('ResultCover:', result);
+      //console.log('ResultCover:', result);
       toast.info('Game deleted!');
       await sleep(1000);
       return window.location.reload();

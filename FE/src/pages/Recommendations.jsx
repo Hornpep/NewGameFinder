@@ -3,12 +3,15 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const Recommendations = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cover, setCover] = useState([]);
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
+  const [gameIds, setGameIds] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +21,13 @@ const Recommendations = () => {
           throw new Error('Network response was not ok');
         }
         const result = await response.json();
+        //console.log('Result Recommendations:', result);
+        const gameIdsWish = result.map((item) => item.igdb_id);
+
+        console.log('gameIdsWish:', gameIdsWish);
+        setGameIds(gameIdsWish);
         setData(result);
+        console.log('results:', result);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -33,8 +42,18 @@ const Recommendations = () => {
     if (data.length > 0) {
       const randomGame = () => {
         const randomIndex = Math.floor(Math.random() * data.length);
-        const randomSimilarGame = data[randomIndex].similar_games[0];
+        const randomSimilarGame =
+          data[randomIndex].similar_games[
+            Math.floor(Math.random() * data[randomIndex].similar_games.length)
+          ];
+
         const idString = randomSimilarGame.toString();
+
+        if (gameIds.includes(randomSimilarGame)) {
+          //toast.info('nicht anzeigen');
+          return randomGame();
+        }
+
         fetchResults(idString);
       };
 
@@ -49,6 +68,7 @@ const Recommendations = () => {
       );
       const result = response.data;
       setResults(result);
+
       if (result.length > 0) {
         fetchCover(result[0].id);
       }
@@ -69,6 +89,12 @@ const Recommendations = () => {
   };
 
   const addToWishlist = async () => {
+    if (gameIds.includes(results[0].id)) {
+      toast.info('Already in Wishlist');
+      await sleep(1500);
+      return window.location.reload();
+    }
+
     // Daten, die an den Server gesendet werden sollen
     const wishlistData = {
       users_id: 15,
