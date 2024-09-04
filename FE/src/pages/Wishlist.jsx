@@ -46,7 +46,9 @@ const Wishlist = () => {
 
   const deleteGame = async (searchQuery) => {
     try {
-      //console.log('test');
+      console.log('sq:', searchQuery);
+      console.log(typeof searchQuery);
+
       // Sende eine Anfrage an das Backend, um Suchergebnisse zu erhalten
       const response = await axios.delete(
         `http://localhost:8080/wishlists/${searchQuery}`
@@ -70,12 +72,12 @@ const Wishlist = () => {
     <>
       <ToastContainer />
       <div className="min-h-screen bg-[#141414] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
-        {data.map((data, index) => (
+        {data.map((item, index) => (
           <div
             key={index}
             className="item relative border  border-gray-700 hover:border-2 hover:border-[#1DD0E0] rounded-lg w-1/10 min-w-[200px] h-80 bg-[#141414] "
             onClick={() =>
-              (window.location.href = `/GameDetails?id=${data.igdb_id}`)
+              (window.location.href = `/GameDetails?id=${item.igdb_id}`)
             } // Neue Seite mit Übergabe der ID öffnen
           >
             <div className="relative h-full w-full flex items-center justify-center">
@@ -83,7 +85,7 @@ const Wishlist = () => {
                 className="bg-contain bg-center bg-no-repeat rounded-lg flex-grow"
                 style={{
                   backgroundImage: `url(${
-                    data.cover_url ||
+                    item.cover_url ||
                     'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg'
                   })`,
                   height: '50%', // Setzt das Bild auf die Hälfte der Höhe des Containers
@@ -101,14 +103,14 @@ const Wishlist = () => {
                 // Ändern zu Delete Button ?
                 e.preventDefault();
                 e.stopPropagation();
-                deleteGame(data.id);
+                deleteGame(item.id);
               }}
             >
               ❤️
             </button>
             <div className="absolute bottom-0 w-full flex  justify-center flex-col  ">
               <h2 className="relative z-10 text-lg  font-semibold text-center w-full text-[#1CE0AF] mt-auto p-4">
-                {data.name}
+                {item.name}
               </h2>
               {/*             <h2 className="relative z-10 text-lg font-semibold text-center justify-center w-full text-[#1CE0AF] mt-auto p-4">
               Game-Id: {result.id}
