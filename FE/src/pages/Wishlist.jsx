@@ -24,7 +24,6 @@ const Wishlist = () => {
         setData(data); // data =  Array von Objekten
         console.log('data in wishlist:', data);
         setLoading(false);
-        toast.info('Click on the Heart if you want to break it.');
       })
       .catch((error) => {
         setError(error);
@@ -40,7 +39,7 @@ const Wishlist = () => {
           <div className="absolute inset-0 border-4 border-t-transparent border-[#1CE0AF] rounded-full animate-[spin_2s_linear_infinite]"></div>
         </div>
         <span className="absolute text-white mt-32 text-lg tracking-wide font-bold">
-          NextGameFinder lädt...
+          Loading wishlist...
         </span>
       </div>
     );
@@ -57,23 +56,34 @@ const Wishlist = () => {
       );
       const result = response.data;
       console.log('ResultCover:', result);
-      toast.info('Game deleted!');
+      toast.success('Removed from wishlist.');
       await sleep(1000);
       return window.location.reload();
     } catch (error) {
-      console.error('Fehler beim Abrufen der Suchergebnisse:', error);
-      // Optional: Fehlerbehandlung anzeigen
+      console.error('Error deleting game:', error);
     }
   };
 
   if (error) {
-    return <p>Fehler: {error.message}</p>;
+    return <p>Error: {error.message}</p>;
   }
 
   return (
     <>
       <ToastContainer />
       <div className="min-h-screen bg-[#141414] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
+        
+        <div className="relative h-[30vh] w-full flex items-center justify-center bg-cover bg-center">
+          <div className="relative z-10 text-center px-4">
+            <h2 className="text-5xl font-bold mb-4 text-primary-500">
+              Your wishlist
+            </h2>
+            <p className="text-xl font-white">
+              Your favorite games are just a click away!
+            </p>
+          </div>
+        </div>
+        
         {data.map((item, index) => (
           <div
             key={index}
@@ -99,17 +109,16 @@ const Wishlist = () => {
             </div>
             <div className="absolute inset-0 bg-[#141414] opacity-0 rounded-lg"></div>
             <button
-              className="absolute top-2 right-2 z-10 text-black "
-              aria-label="Toggle Heart"
-              onClick={(e) => {
-                // Ändern zu Delete Button ?
-                e.preventDefault();
-                e.stopPropagation();
-                deleteGame(item.id);
-              }}
-            >
-              ❤️
-            </button>
+            className="absolute top-2 right-2 z-10 bg-[#1CE0AF] text-black px-4 py-2 rounded-md shadow hover:bg-[#17a2b8] "
+            aria-label="Toggle Heart"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              deleteGame(item.id);
+            }}
+          >
+            Remove
+          </button>
             <div className="absolute bottom-0 w-full flex  justify-center flex-col  ">
               <h2 className="relative z-10 text-lg  font-semibold text-center w-full text-[#1CE0AF] mt-auto p-4">
                 {item.name}
