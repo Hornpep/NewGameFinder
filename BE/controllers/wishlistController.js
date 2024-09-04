@@ -55,7 +55,7 @@ export const getWishlistsByUserId = async (req, res) => {
 // Delete a Wishlist entry by ID
 export const deleteWishlist = async (req, res) => {
   try {
-    const wishlist = await Wishlist.findByPk(req.params.id);
+    const wishlist = await Wishlist.findAll(req);
     if (!wishlist) {
       return res.status(404).json({ error: 'Wishlist not found' });
     }
