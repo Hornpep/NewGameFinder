@@ -9,6 +9,8 @@ const Wishlist = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   useEffect(() => {
     fetch('http://localhost:8080/wishlists') // HIER an BE anbinden
       .then((response) => {
@@ -56,8 +58,8 @@ const Wishlist = () => {
       const result = response.data;
       console.log('ResultCover:', result);
       toast.info('Game deleted!');
-      Wishlist();
-      return;
+      await sleep(1000);
+      return window.location.reload();
     } catch (error) {
       console.error('Fehler beim Abrufen der Suchergebnisse:', error);
       // Optional: Fehlerbehandlung anzeigen
