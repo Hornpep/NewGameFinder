@@ -24,10 +24,10 @@ const Recommendations = () => {
         //console.log('Result Recommendations:', result);
         const gameIdsWish = result.map((item) => item.igdb_id);
 
-        console.log('gameIdsWish:', gameIdsWish);
+        //console.log('gameIdsWish:', gameIdsWish);
         setGameIds(gameIdsWish);
         setData(result);
-        console.log('results:', result);
+        //console.log('results:', result);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -99,8 +99,8 @@ const Recommendations = () => {
   const addToWishlist = async () => {
     if (gameIds.includes(results[0].id)) {
       toast.info('Already in Wishlist');
-      await sleep(1500);
-      return window.location.reload();
+
+      return;
     }
 
     // Daten, die an den Server gesendet werden sollen
@@ -131,6 +131,8 @@ const Recommendations = () => {
       }
 
       toast.success('Added to Wishlist');
+      await sleep(1500);
+      window.location.reload();
     } catch (error) {
       toast.error(`Error: ${error.message}`);
     }

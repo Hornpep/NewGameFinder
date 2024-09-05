@@ -79,12 +79,29 @@ const GameDetails = () => {
     }
   };
 
+  const showInfoToast = () => {
+    toast.info('Added it to your wishlist.!', {
+      position: 'top-right',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      style: {
+        background: '#000000', // Schwarzer Hintergrund
+        color: '#1CE0AF', // Schriftfarbe
+        borderRadius: '5px',
+      },
+    });
+  };
+
   const addToWishlist = async () => {
     if (gameIds.includes(results[0].id)) {
-      console.log('test', results[0].id);
       toast.info('Already in Wishlist');
       await sleep(1500);
-      return window.location.reload();
+
+      return;
     }
     // Daten, die an den Server gesendet werden sollen
     /*     let cover_big = cover[0].url;
@@ -121,7 +138,10 @@ const GameDetails = () => {
         throw new Error('Error adding game to wishlist');
       }
 
-      toast.success('Added to wishlist successfully!');
+      //toast.success('Added to wishlist successfully!');
+      showInfoToast();
+      await sleep(1500);
+      window.location.reload();
     } catch (error) {
       alert(`Fehler: ${error.message}`);
     }
@@ -144,7 +164,7 @@ const GameDetails = () => {
     <div className="bg-[#141414] min-h-screen p-28 text-white">
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
