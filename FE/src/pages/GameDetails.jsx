@@ -65,7 +65,15 @@ const GameDetails = () => {
       const response = await axios.get(
         `http://localhost:8080/searchCoverById?id=${gameId}`
       );
-      setCover(response.data);
+      console.log('response.data GameDetails:', response.data);
+      let cover_big = response.data[0].url;
+
+      let newCover = cover_big.replace('thumb', 'cover_big');
+
+      console.log('newCover:', newCover);
+
+      //setCover(response.data);
+      setCover(newCover);
     } catch (error) {
       console.error('Error fetching cover:', error);
     }
@@ -79,11 +87,18 @@ const GameDetails = () => {
       return window.location.reload();
     }
     // Daten, die an den Server gesendet werden sollen
+    /*     let cover_big = cover[0].url;
+
+    let newCover = cover_big.replace('thumb', 'cover_big');
+
+    console.log('newCover:', newCover); */
+
     const wishlistData = {
       users_id: 15,
       igdb_id: results[0].id, // Beispielwert für igdb_id
       name: `${results[0].name}`, // Beispielwert für name
-      cover_url: `${cover[0].url}`, // Beispielwert für cover_url
+      //cover_url: `${cover[0].url}`, // Beispielwert für cover_url
+      cover_url: cover,
       genre: results[0].genres, // Beispielwert für genre
       release_date: '2024-09-02T00:00:00Z', // Beispielwert für release_date
       platform: results[0].platforms, // Beispielwert für platform
@@ -122,7 +137,7 @@ const GameDetails = () => {
 
   const game = results[0];
   const gameCover =
-    cover[0]?.url ||
+    cover ||
     'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg';
 
   return (

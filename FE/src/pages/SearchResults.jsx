@@ -44,12 +44,16 @@ const SearchResults = () => {
       //setCover(fetchedCover);
 
       results.forEach((result, index) => {
+        let cover = fetchedCover[index][0].url;
+
+        cover = cover.replace('thumb', 'cover_big');
+        console.log('cover:', cover);
+
         test.push({
           name: result.name,
           id: result.id,
-          url: fetchedCover[index][0].url,
-          /*          similar_games: result.similar_games,
-          rating: result.rating, */
+          //url: fetchedCover[index][0].url,
+          url: cover,
         }); // Objekt mit name und id hinzufügen
       });
       //console.log(test);
@@ -97,12 +101,12 @@ const SearchResults = () => {
   return (
     <div className="min-h-screen bg-[#141414] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5   gap-14 p-28  w-full  dark:text-white">
       <div className="relative h-[30vh] w-full flex items-center justify-center bg-cover bg-center">
-          <div className="relative z-10 text-center px-4">
-            <h2 className="text-3xl font-bold mb-4 text-white">
+        <div className="relative z-10 text-center px-4">
+          <h2 className="text-3xl font-bold mb-4 text-white">
             Search results for: <span className="text-[#1CE0AF]">{query}</span>
-            </h2>
-          </div>
+          </h2>
         </div>
+      </div>
 
       {results.map((result, index) => (
         <div
