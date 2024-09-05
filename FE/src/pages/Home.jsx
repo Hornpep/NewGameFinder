@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -17,21 +17,21 @@ const Home = () => {
 
   const fetchGames = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-games");
+      const response = await axios.get('http://localhost:8080/all-games');
       const results = response.data.slice(0, 9); // Begrenze die Anzahl der Spiele auf 9
 
       const gamesWithCovers = await Promise.all(
         results.map(async (game) => {
           const cover = await fetchCover(game.id);
-          return { ...game, cover_url: cover ? cover.url : null };
+          return { ...game, cover_url: cover ? cover : null };
         })
       );
 
       setGames(gamesWithCovers);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching games:", error);
-      setError("Error fetching games: " + error.message);
+      console.error('Error fetching games:', error);
+      setError('Error fetching games: ' + error.message);
       setLoading(false);
     }
   };
@@ -42,30 +42,35 @@ const Home = () => {
         `http://localhost:8080/searchCoverById?id=${game}`
       );
       const result = response.data;
-      return result[0];
+      let cover_big = result[0].url;
+
+      let newCover = cover_big.replace('thumb', 'cover_big');
+
+      console.log('newCover home:', newCover);
+      return newCover;
     } catch (error) {
-      console.error("Fehler beim Abrufen der Covers:", error);
+      console.error('Fehler beim Abrufen der Covers:', error);
       return null;
     }
   };
 
   const fetchUpcomingGames = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/upcoming-games");
+      const response = await axios.get('http://localhost:8080/upcoming-games');
       const results = response.data;
 
       const gamesWithCovers = await Promise.all(
         results.map(async (game) => {
           const cover = await fetchCover(game.id);
-          return { ...game, cover_url: cover ? cover.url : null };
+          return { ...game, cover_url: cover ? cover : null };
         })
       );
 
       setUpcomingGames(gamesWithCovers);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching upcoming games:", error);
-      setError("Error fetching upcoming games: " + error.message);
+      console.error('Error fetching upcoming games:', error);
+      setError('Error fetching upcoming games: ' + error.message);
       setLoading(false);
     }
   };
@@ -90,7 +95,7 @@ const Home = () => {
 
   // Funktion für den Button, um zur Coming Soon-Sektion zu scrollen
   const scrollToComingSoon = () => {
-    comingSoonRef.current?.scrollIntoView({ behavior: "smooth" });
+    comingSoonRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -104,7 +109,7 @@ const Home = () => {
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 text-center px-4">
-          <h1 className="text-5xl font-bold mb-4">Nextgamefinder</h1>
+          <h1 className="text-5xl font-bold mb-4">NextGameFinder</h1>
           <p className="text-xl text-white">Find your next game to play</p>
           <button
             onClick={scrollToComingSoon}
@@ -145,12 +150,12 @@ const Home = () => {
                 style={{
                   backgroundImage: `url(${
                     game.cover_url ||
-                    "https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg"
+                    'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg'
                   })`,
-                  height: "50%",
-                  width: "100%",
-                  marginTop: "25%",
-                  marginBottom: "25%",
+                  height: '50%',
+                  width: '100%',
+                  marginTop: '25%',
+                  marginBottom: '25%',
                 }}
               ></div>
             </div>
@@ -198,12 +203,12 @@ const Home = () => {
                 style={{
                   backgroundImage: `url(${
                     game.cover_url ||
-                    "https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg"
+                    'https://www.igdb.com/packs/static/igdbLogo-bcd49db90003ee7cd4f4.svg'
                   })`,
-                  height: "50%",
-                  width: "100%",
-                  marginTop: "25%",
-                  marginBottom: "25%",
+                  height: '50%',
+                  width: '100%',
+                  marginTop: '25%',
+                  marginBottom: '25%',
                 }}
               ></div>
             </div>
@@ -226,7 +231,9 @@ const Home = () => {
 
       {/* Feature Section */}
       <div className="py-16 mb-16 bg-background-900 text-white text-center">
-        <h2 className="text-4xl font-bold mb-4 text-primary-500">Why Choose Us?</h2>
+        <h2 className="text-4xl font-bold mb-4 text-primary-500">
+          Why Choose Us?
+        </h2>
         <p className="text-xl mb-8">
           We offer personalized recommendations, the latest game news, and an
           extensive library of titles.
